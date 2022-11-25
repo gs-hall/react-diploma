@@ -1,35 +1,36 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
-import topSalesReducer from '../features/topSales/topSalesSlice';
-import { getTopSales, getTopSalesSuccess, getTopSalesFailure } from '../features/topSales/topSalesSlice';
-import { fetchData } from '../api/api';
+import topSalesReducer, { actionGetTopSales, effectGetTopSales } from '../features/topSales/topSalesSlice';
+import catalogReducer, { actionGetCatalog, effectGetCatalog } from '../features/catalog/catalogSlice';
+import categoryReducer, { actionGetCategory, effectGetCategory } from '../features/category/categorySlice';
 
 const listenerMiddleware = createListenerMiddleware()
 
 listenerMiddleware.startListening({
-  actionCreator: getTopSales,
-  effect: async (action, listenerApi) => {
-    console.log('listenerMiddleware', action, action.payload);
-    //listenerApi.cancelActiveListeners();
-    try {
-      const { url } = action.payload;
-      const data = await fetchData(url);
-      console.log('listenerMiddleware OK');
-      listenerApi.dispatch(getTopSalesSuccess(data));
-    } catch (error) {
-      console.log('listenerMiddleware ERROR', error.message);
-      listenerApi.dispatch(getTopSalesFailure(error.message));
-    };
-
-  },
+  actionCreator: actionGetTopSales,
+  effect: effectGetTopSales
 });
 
+listenerMiddleware.startListening({
+  actionCreator: actionGetCatalog,
+  effect: effectGetCatalog
+});
+
+listenerMiddleware.startListening({
+  actionCreator: actionGetCategory,
+  effect: effectGetCategory
+});
 
 export const store = configureStore({
   reducer: {
     topSales: topSalesReducer,
+    catalog: catalogReducer,
+    category: categoryReducer
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: true, thunk: false })
+    getDefaultMiddleware({
+      serializableCheck: true,
+      thunk: false
+    })
     .prepend(listenerMiddleware.middleware),
   devTools: process.env.NODE_ENV !== 'production'
 });

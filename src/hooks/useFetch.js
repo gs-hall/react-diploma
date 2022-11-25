@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function useFetch(selector, fetchAction, url) {
-  const { data, isLoading, isError, isReloadRequired } = useSelector(selector);
+  const { data, isLoading, isError, isReloadRequired, ...rest } = useSelector(selector);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -11,5 +11,5 @@ export default function useFetch(selector, fetchAction, url) {
     };
   }, [dispatch, isLoading, fetchAction, url, isReloadRequired]);
 
-  return { data, isLoading, isError };
+  return { data, isLoading, isError, ...rest };
 };
