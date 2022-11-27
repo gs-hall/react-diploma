@@ -1,9 +1,8 @@
 import React from "react";
+import Error from "../components/Error";
 
 export default function NoProduct() {
   return (
-    <>
-      <span>Нет такого продукта</span>
-    </>
+    <Error title="Продукт не найден" message="Извините, нет такого продукта!" />
   );
 };

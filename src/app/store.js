@@ -1,7 +1,11 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import topSalesReducer, { actionGetTopSales, effectGetTopSales } from '../features/topSales/topSalesSlice';
 import catalogReducer, { actionGetCatalog, effectGetCatalog } from '../features/catalog/catalogSlice';
-import categoryReducer, { actionGetCategory, effectGetCategory } from '../features/category/categorySlice';
+import categoryReducer, {
+  actionGetCategory, effectGetCategory,
+  actionSetActiveCategory, effectSetActiveCategory
+} from '../features/category/categorySlice';
+import productReducer, { actionGetProduct, effectGetProduct } from '../features/product/productSlice';
 
 const listenerMiddleware = createListenerMiddleware()
 
@@ -20,11 +24,22 @@ listenerMiddleware.startListening({
   effect: effectGetCategory
 });
 
+listenerMiddleware.startListening({
+  actionCreator: actionSetActiveCategory,
+  effect: effectSetActiveCategory
+});
+
+listenerMiddleware.startListening({
+  actionCreator: actionGetProduct,
+  effect: effectGetProduct
+});
+
 export const store = configureStore({
   reducer: {
     topSales: topSalesReducer,
     catalog: catalogReducer,
-    category: categoryReducer
+    category: categoryReducer,
+    product: productReducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

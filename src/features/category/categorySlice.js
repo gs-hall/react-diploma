@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchData } from '../../api/api';
+import { effectFetchData } from '../../api/api';
+import { actionAddCatalogParams } from '../catalog/catalogSlice';
 
 const allOption = {
   "id":0,
@@ -23,6 +24,7 @@ export const categorySlice = createSlice({
       state.isLoading = true;
       state.isError = false;
       state.isReloadRequired = false;
+      state.data = null;
     },
     actionCategoryLoaded: (state, action) => {
       console.log('actionCategoryLoaded', action.payload);
@@ -41,30 +43,30 @@ export const categorySlice = createSlice({
       console.log('actionReloadCategory');
       state.isReloadRequired = true;
     },
-    actionSetActive: (state, action) => {
-      console.log('actionSetActive', action.payload);
-      state.activeItemID = action.payload;
+    actionSetActiveCategory: (state, action) => {
+      console.log('actionSetActiveCategory', action.payload);
+      state.activeItemID = action.payload.activeItemID;
     },
 
   }
 });
 
-export const { actionGetCategory, actionCategoryLoaded, actionCategoryLoadFailed, actionReloadCategory, actionSetActive } = categorySlice.actions;
+export const { actionGetCategory, actionCategoryLoaded, actionCategoryLoadFailed, actionReloadCategory, actionSetActiveCategory } = categorySlice.actions;
 export const selectCategory = (state) => state.category;
 export default categorySlice.reducer;
 
-export const effectGetCategory = async (action, listenerApi) => {
+export async function effectGetCategory(action, listenerApi) {
   console.log('effectGetCategory', action, action.payload);
-  try {
-    const { url } = action.payload;
-    const data = await fetchData(url);
-    await listenerApi.delay(1000);
-    console.log('effectGetCategory OK');
-    listenerApi.dispatch(actionCategoryLoaded(data));
-  } catch (error) {
-    console.log('effectGetCategory ERROR', error.message);
-    listenerApi.dispatch(actionCategoryLoadFailed(error.message));
-  };
+  await effectFetchData({
+    action,
+    listenerApi,
+    url: process.env.REACT_APP_CATEGORY_URL,
+    successAction: actionCategoryLoaded,
+    failureAction: actionCategoryLoadFailed
+  });
 };
 
-
+export async function effectSetActiveCategory(action, listenerApi) {
+  console.log('effectSetActiveCategory', action.payload);
+  listenerApi.dispatch(actionAddCatalogParams({ categoryId: action.payload.activeItemID }));
+};

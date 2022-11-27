@@ -2,8 +2,8 @@ import React from "react"
 import { NavLink } from 'react-router-dom';
 import Logo from "./Logo";
 import classnames from 'classnames';
-import Search from "./Search";
-import Cart from "./Cart";
+import HeaderSearch from "./HeaderSearch";
+import HeaderCart from "./HeaderCart";
 
 export default function Header() {
   const menu = [
@@ -35,10 +35,9 @@ export default function Header() {
               </ul>
               <div>
                 <div className="header-controls-pics">
-                  <div data-id="search-expander" className="header-controls-pic header-controls-search"></div>
-                  <Cart />
+                  <HeaderSearch />
+                  <HeaderCart />
                 </div>
-                <Search />
               </div>
             </div>
           </nav>

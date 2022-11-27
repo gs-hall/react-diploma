@@ -1,7 +1,9 @@
+// Represents an element in catalog list
+
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function CatalogItem({ item }) {
+export default function CatalogListItem({ item }) {
   return (
     <div className="col-4">
       <div className="card catalog-item-card">
@@ -13,7 +15,7 @@ export default function CatalogItem({ item }) {
         <div className="card-body">
           <p className="card-text">{item.title}</p>
           <p className="card-text">{item.price} руб.</p>
-          <Link to={`/products/{item.id}`} className="btn btn-outline-primary">Заказать</Link>
+          <Link to={`/products/${item.id}`} className="btn btn-outline-primary">Заказать</Link>
         </div>
       </div>
     </div>

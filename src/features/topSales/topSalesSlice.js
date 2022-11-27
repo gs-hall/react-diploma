@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { fetchData } from '../../api/api';
+import { effectFetchData } from '../../api/api';
 
 const initialState = {
   data: null,
@@ -40,16 +40,13 @@ export const { actionGetTopSales, actionTopSalesLoaded, actionTopSalesLoadFailed
 export const selectTopSales = (state) => state.topSales;
 export default topSalesSlice.reducer;
 
-export const effectGetTopSales = async (action, listenerApi) => {
-  console.log('effectGetTopSales', action, action.payload);
-  try {
-    const { url } = action.payload;
-    const data = await fetchData(url);
-    await listenerApi.delay(2000);
-    console.log('effectGetTopSales OK');
-    listenerApi.dispatch(actionTopSalesLoaded(data));
-  } catch (error) {
-    console.log('effectGetTopSales ERROR', error.message);
-    listenerApi.dispatch(actionTopSalesLoadFailed(error.message));
-  };
+export async function effectGetTopSales(action, listenerApi) {
+  await effectFetchData({
+    action,
+    listenerApi,
+    url: process.env.REACT_APP_TOP_SALES_URL,
+    successAction: actionTopSalesLoaded,
+    failureAction: actionTopSalesLoadFailed
+  });  
 };
+

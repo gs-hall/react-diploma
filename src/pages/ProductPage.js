@@ -1,9 +1,14 @@
-import React from "react"
+import React from 'react';
+import { useParams } from 'react-router-dom';
+import NoProduct from './NoProductPage';
+import productFactory from '../features/product/productFactory';
 
-export default function Product() {
-  return (
-    <>
-      <h1>Product</h1>
-    </>
-  );
+export default function ProductPage() {
+    const params = useParams();
+    if (isNaN(params.id)) return <NoProduct />;
+
+    const productID = Number(params.id);
+    const Product = productFactory({ itemID: productID });
+
+    return <Product />;
 };

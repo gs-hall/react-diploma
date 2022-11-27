@@ -1,15 +1,17 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-export default function useFetch(selector, fetchAction, url) {
-  const { data, isLoading, isError, isReloadRequired, ...rest } = useSelector(selector);
+export default function useFetch(selector, loadAction, itemID) {
+  const { data, isLoading, isError, isReloadRequired, params, ...rest } = useSelector(selector);
   const dispatch = useDispatch();
+  console.log('useFetch isReloadRequired =', isReloadRequired);
 
   useEffect(() => {
-    if (!isLoading && isReloadRequired) {
-      dispatch(fetchAction({ url }));
+    if (isReloadRequired) {
+      console.log('useEffect: params from state = ', params, 'params = ', params);
+      dispatch(loadAction({ params, itemID }));
     };
-  }, [dispatch, isLoading, fetchAction, url, isReloadRequired]);
+  }, [dispatch, loadAction, params, isReloadRequired, itemID]);
 
   return { data, isLoading, isError, ...rest };
 };

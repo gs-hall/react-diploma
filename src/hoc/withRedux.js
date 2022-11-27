@@ -4,17 +4,15 @@ import useFetch from "../hooks/useFetch";
 import Error from "../components/Error";
 import Loader from "../components/Loader";
 
-export const withRedux = ({ WrappedComponent, selector, fetchAction, fetchUrl, reloadAction, setActiveAction }) => (props) => {
+export const withRedux = ({ WrappedComponent, selector, actions, itemID, ...rest }) => (props) => {
   const dispatch = useDispatch();
-  const injectedProps = useFetch(selector, fetchAction, fetchUrl);
-  const { isLoading, error } = injectedProps;
-  const actions = { dispatch, fetchAction, reloadAction, setActiveAction };
+  const result = useFetch(selector, actions.load, itemID);
 
   return (
-    <WrappedComponent { ...injectedProps } { ...actions } { ...props } >
-      <Loader isLoading={ isLoading } />
-      <Error onRetry={ () => dispatch(reloadAction()) } error={ error } />
+    <WrappedComponent { ...result } actions={{ ...actions, dispatch }} { ...rest } { ...props } >
       { props.children }
+      { result.isLoading && <Loader isLoading={ result.isLoading } /> }
+      { result.error && <Error onRetry={ () => dispatch(actions.reload()) } error={ result.error } /> }      
     </WrappedComponent>
   );
 };
