@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Loader({ isLoading }) {
+export default function Loader({ isLoading = true }) {
   if (!isLoading) return null;
   console.log('Loader');
   return (

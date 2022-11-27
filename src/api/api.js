@@ -15,7 +15,7 @@ export async function effectFetchData({ action, listenerApi, url, params, succes
   console.log('effectFetchData', url, params);
   try {
     const data = await fetchData(url, params);
-    await listenerApi.delay(1000);
+    await listenerApi.delay(300);
     //console.log('effectFetchData OK');
     listenerApi.dispatch(successAction(data));
   } catch (error) {

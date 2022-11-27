@@ -6,6 +6,7 @@ import categoryReducer, {
   actionSetActiveCategory, effectSetActiveCategory
 } from '../features/category/categorySlice';
 import productReducer, { actionGetProduct, effectGetProduct } from '../features/product/productSlice';
+import cartReducer from '../features/cart/cartSlice';
 
 const listenerMiddleware = createListenerMiddleware()
 
@@ -40,6 +41,7 @@ export const store = configureStore({
     catalog: catalogReducer,
     category: categoryReducer,
     product: productReducer,
+    cart: cartReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

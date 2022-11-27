@@ -1263,7 +1263,7 @@
             },
             {
                 "size": "20 US",
-                "available": false
+                "available": true
             }
         ]
     },
@@ -1448,7 +1448,7 @@
         "sizes": [
             {
                 "size": "16 US",
-                "available": true
+                "available": false
             },
             {
                 "size": "18 US",

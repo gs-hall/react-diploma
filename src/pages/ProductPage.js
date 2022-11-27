@@ -10,5 +10,8 @@ export default function ProductPage() {
     const productID = Number(params.id);
     const Product = productFactory({ itemID: productID });
 
-    return <Product />;
+    return(
+      <Product />
+    );
+      
 };

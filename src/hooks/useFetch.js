@@ -7,7 +7,7 @@ export default function useFetch(selector, loadAction, itemID) {
   console.log('useFetch isReloadRequired =', isReloadRequired);
 
   useEffect(() => {
-    if (isReloadRequired) {
+    if (isReloadRequired || itemID) {
       console.log('useEffect: params from state = ', params, 'params = ', params);
       dispatch(loadAction({ params, itemID }));
     };

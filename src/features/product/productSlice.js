@@ -14,9 +14,9 @@ export const productSlice = createSlice({
   reducers: {
     actionGetProduct: (state, action) => {
       console.log('actionGetProduct', action.payload);
+      state.data = null;
       state.isLoading = true;
       state.isError = false;
-      state.isReloadRequired = false;
     },
     actionProductLoaded: (state, action) => {
       console.log('actionProductLoaded', action.payload);
