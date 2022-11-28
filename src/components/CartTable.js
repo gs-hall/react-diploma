@@ -1,8 +1,9 @@
 import React from "react";
 import CartTableItem from "./CartTableItem";
 
-function calcSum(items, prop) {
-  return items.reduce((a, b) => (a + b[prop]), 0);
+// Calculates dot product of prices and counts
+function calcDotProduct(items, prop1, prop2) {
+  return items.reduce((a, b) => (a + b[prop1]*b[prop2]), 0);
 };
 
 export default function CartTable({ items }) {
@@ -26,7 +27,7 @@ export default function CartTable({ items }) {
         { items?.map((item, index) => <CartTableItem key={ item.id } item={ item } index={ index } />) }
         <tr>
           <td colSpan="5" className="text-right">Общая стоимость</td>
-          <td>{ calcSum(items, "price") } руб.</td>
+          <td>{ calcDotProduct(items, "price", "count") } руб.</td>
         </tr>
       </tbody>
     </table>

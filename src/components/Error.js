@@ -6,8 +6,8 @@ export default function Error({ title, message }) {
   return (
     <>
       <Banner />
-      <section class="top-sales">
-        <h2 class="text-center">{title || message}</h2>
+      <section className="top-sales">
+        <h2 className="text-center">{title || message}</h2>
         <p>{message}</p>
       </section>
     </>
