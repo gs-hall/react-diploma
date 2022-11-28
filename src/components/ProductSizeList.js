@@ -1,28 +1,34 @@
 import classNames from "classnames";
-import React, { useState } from "react"
+import React, { useState } from "react";
+import { useDispatch } from 'react-redux';
+import { addToCart } from "../features/cart/cartSlice";
 
-export default function SizeList({ sizes, activeItemID, actions }) {
-  const [selectedSize, setSelectedSize] = useState(null);
+export default function ProductSizeList({ product, activeItemID, actions }) {
+  const [size, setSize] = useState(null);
   const [count, setCount] = useState(1);
+  const dispatch = useDispatch();
 
-  const handlePutToCart = () => {
-    console.log('handlePutToCart', selectedSize, count);
+  const handleAddToCart = () => {
+    console.log('handleAddToCart', size, count);
+    const { id, title, price } = product;
+    dispatch(addToCart({ id, title, price, size, count }));
   };
 
   const handleChangeCount = (newCount) => {
     console.log('handleChangeCount', newCount);
-    if (!selectedSize || newCount<1 || newCount>10) return;
-    setCount(newCount);
+    if (size && newCount >= 1 && newCount <= 10) {
+      setCount(newCount);
+    };
   };
 
   const handleSelectSize = (newSize) => {
     console.log('handleSelectSize', newSize);
-    setSelectedSize(newSize);
+    setSize(newSize);
     setCount(1);
   };
 
-  if (sizes === null) return;
-  const availableSizes = sizes.filter(x => (x.available));
+  if (product.sizes === null) return;
+  const availableSizes = product.sizes.filter(x => (x.available));
   if (availableSizes.length === 0) return <p>Нет в наличии</p>;
 
   return (
@@ -32,14 +38,14 @@ export default function SizeList({ sizes, activeItemID, actions }) {
           {availableSizes.map(item => (
             <span
               key={ item.size }
-              className={ classNames("catalog-item-size", { "selected": selectedSize === item.size}) }
+              className={ classNames("catalog-item-size", { "selected": size === item.size}) }
               onClick = { () => handleSelectSize(item.size) }
               >
               { item.size }
             </span>
           ))}
         </p>
-        { selectedSize &&
+        { size &&
         <p>Количество:
           <span className="btn-group btn-group-sm pl-2">
             <button className="btn btn-secondary" onClick={() => handleChangeCount(count-1)} >-</button>
@@ -49,7 +55,13 @@ export default function SizeList({ sizes, activeItemID, actions }) {
         </p>
         }
       </div>
-      <button className="btn btn-danger btn-block btn-lg" onClick={ handlePutToCart } disabled={ selectedSize == null } >В корзину</button>
+      <button
+        className="btn btn-danger btn-block btn-lg"
+        onClick={ handleAddToCart }
+        disabled={ size == null }
+        >
+        В корзину
+      </button>
     </>
   );
 };

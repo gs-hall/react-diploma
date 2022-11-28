@@ -3,23 +3,23 @@
 import React from "react";
 import ProductSizeList from "./ProductSizeList";
 
-export default function Product({ data, isLoading, children }) {
-  //if (isLoading) return <Loader />;
-  //if (data == null) return null;
+export default function Product(props) {
+  if (!props.data) return props.children;
 
-  console.log('Product', data, isLoading);
+  const { id, title, images, sku, manufacturer, color, material, season, reason, price, sizes } = props.data;
+
   return (
     <section className="catalog-item">
-      { children }
-      { data &&
+      { props.children }
+      { title &&
       <>
-        <h2 className="text-center">{data.title}</h2>
+        <h2 className="text-center">{title}</h2>
         <div className="row">
           <div className="col-5">
             <img
-              src={data.images[0]}
+              src={images[0]}
               className="img-fluid"
-              alt={data.title}
+              alt={title}
               />
           </div>
           <div className="col-7">
@@ -27,31 +27,31 @@ export default function Product({ data, isLoading, children }) {
               <tbody>
                 <tr>
                   <td>Артикул</td>
-                  <td>{data.sku}</td>
+                  <td>{sku}</td>
                 </tr>
                 <tr>
                   <td>Производитель</td>
-                  <td>{data.manufacturer}</td>
+                  <td>{manufacturer}</td>
                 </tr>
                 <tr>
                   <td>Цвет</td>
-                  <td>{data.color}</td>
+                  <td>{color}</td>
                 </tr>
                 <tr>
                   <td>Материалы</td>
-                  <td>{data.material}</td>
+                  <td>{material}</td>
                 </tr>
                 <tr>
                   <td>Сезон</td>
-                  <td>{data.season}</td>
+                  <td>{season}</td>
                 </tr>
                 <tr>
                   <td>Повод</td>
-                  <td>{data.reason}</td>
+                  <td>{reason}</td>
                 </tr>
               </tbody>
             </table>
-            <ProductSizeList sizes={ data.sizes } />
+            <ProductSizeList product={{ id, title, price, sizes }} />
           </div>
         </div>
       </>

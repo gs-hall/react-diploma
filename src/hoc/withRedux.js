@@ -8,16 +8,11 @@ export const withRedux = ({ WrappedComponent, selector, actions, itemID, ...rest
   const dispatch = useDispatch();
   const result = useFetch(selector, actions.load, itemID);
 
-  if (itemID !== undefined) {
-    //dispatch(actions.reload());
-  };
-  console.log('withRedux result = ', result);
-
   return (
     <WrappedComponent { ...result } actions={{ ...actions, dispatch }} { ...rest } { ...props } >
       { props.children }
       { result.isLoading && <Loader isLoading={ result.isLoading } /> }
-      { result.error && <Error onRetry={ () => dispatch(actions.reload()) } error={ result.error } /> }      
+      { result.error && <Error onRetry={ () => dispatch(actions.reload()) } error={ result.error } /> }
     </WrappedComponent>
   );
 };
