@@ -5,7 +5,7 @@ export default function CartTableItem({ item, index }) {
   return (
     <tr>
       <td>{index}</td>
-      <td><Link to={`/products/{item.id}`}>{item.title}</Link></td>
+      <td><Link to={`/products/${item.id}`}>{item.title}</Link></td>
       <td>{item.size}</td>
       <td>{item.count}</td>
       <td>{item.price}</td>

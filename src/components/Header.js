@@ -4,14 +4,17 @@ import Logo from "./Logo";
 import classnames from 'classnames';
 import HeaderSearch from "./HeaderSearch";
 import HeaderCart from "./HeaderCart";
+import cartFactory from "../features/cart/cartFactory";
+
+const menu = [
+  {link:"/", name:"Главная"},
+  {link:"/catalog", name:"Каталог"},
+  {link:"/about", name:"О магазине"},
+  {link:"/contacts", name:"Контакты"}
+];
 
 export default function Header() {
-  const menu = [
-    {link:"/", name:"Главная"},
-    {link:"/catalog", name:"Каталог"},
-    {link:"/about", name:"О магазине"},
-    {link:"/contacts", name:"Контакты"}
-  ];
+  const HeaderCartWithLocalStorage = cartFactory({ WrappedComponent: HeaderCart });
 
   return (
     <header className="container">
@@ -36,7 +39,7 @@ export default function Header() {
               <div>
                 <div className="header-controls-pics">
                   <HeaderSearch />
-                  <HeaderCart />
+                  <HeaderCartWithLocalStorage />
                 </div>
               </div>
             </div>

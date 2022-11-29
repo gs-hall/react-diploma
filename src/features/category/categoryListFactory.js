@@ -1,9 +1,9 @@
-import { withRedux } from "../../hoc/withRedux";
+import { withApi } from "../../hoc/withApi";
 import CategoryList from "../../components/CategoryList";
 import { selectCategory, actionGetCategory, actionReloadCategory, actionSetActiveCategory } from "./categorySlice";
 
 export default function categoryListFactory() {
-  return withRedux({
+  return withApi({
     WrappedComponent: CategoryList,
     selector: selectCategory,
     actions: {

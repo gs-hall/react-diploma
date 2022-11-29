@@ -1,12 +1,9 @@
 import React from "react";
-import { selectCart, setCartData, localStorageCartKey } from "../features/cart/cartSlice";
 import CartTable from "./CartTable";
 import { Link } from "react-router-dom";
-import useGetFromLocalStorage from "../hooks/useGetFromLocalStorage";
 
 export default function Cart(props) {
   const data = props.data;
-  //const { data } = useGetFromLocalStorage(selectCart, setCartData, localStorageCartKey);
   console.log('Cart props = ', props);
 
   if (data == null || data?.items?.length === 0) {

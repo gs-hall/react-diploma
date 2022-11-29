@@ -1,9 +1,9 @@
-import { withRedux } from "../../hoc/withRedux";
+import { withApi } from "../../hoc/withApi";
 import CatalogList from "../../components/CatalogList";
 import { selectCatalog, actionGetCatalog, actionReloadCatalog, actionLoadMoreCatalog } from "./catalogSlice";
 
 export default function catalogFactory() {
-  return withRedux({
+  return withApi({
     WrappedComponent: CatalogList,
     selector: selectCatalog,
     actions: {

@@ -1,14 +1,14 @@
-import { withRedux } from "../../hoc/withRedux";
+import { withApi } from "../../hoc/withApi";
 import TopSales from "../../components/TopSales";
 import { selectTopSales, actionGetTopSales, actionReloadTopSales } from "./topSalesSlice";
 
 export default function topSalesFactory() {
-  return withRedux({
+  return withApi({
     WrappedComponent: TopSales,
     selector: selectTopSales,
     actions: {
       load: actionGetTopSales,
       reload: actionReloadTopSales
-    }       
+    }
   });
 };

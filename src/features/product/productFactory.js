@@ -1,10 +1,10 @@
-import { withRedux } from "../../hoc/withRedux";
+import { withApi } from "../../hoc/withApi";
 import ProductDetails from "../../components/Product";
 import { selectProduct, actionGetProduct, actionReloadProduct } from "./productSlice";
 
 export default function productFactory({ itemID }) {
   console.log('productFactory', itemID);
-  return withRedux({
+  return withApi({
     WrappedComponent: ProductDetails,
     selector: selectProduct,
     actions: {

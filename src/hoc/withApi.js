@@ -4,7 +4,7 @@ import useFetch from "../hooks/useFetch";
 import Error from "../components/Error";
 import Loader from "../components/Loader";
 
-export const withRedux = ({ WrappedComponent, selector, actions, itemID, ...rest }) => (props) => {
+export const withApi = ({ WrappedComponent, selector, actions, itemID, ...rest }) => (props) => {
   const dispatch = useDispatch();
   const result = useFetch(selector, actions.load, itemID);
 

@@ -24,7 +24,7 @@ export default function CartTable({ items }) {
         </tr>
       </thead>
       <tbody>
-        { items?.map((item, index) => <CartTableItem key={ item.id } item={ item } index={ index } />) }
+        { items?.map((item, index) => <CartTableItem key={ item.id } item={ item } index={ index+1 } />) }
         <tr>
           <td colSpan="5" className="text-right">Общая стоимость</td>
           <td>{ calcDotProduct(items, "price", "count") } руб.</td>
