@@ -14,7 +14,7 @@ const menu = [
 ];
 
 export default function Header() {
-  const HeaderCartWithLocalStorage = cartFactory({ WrappedComponent: HeaderCart });
+  const HeaderCartWithLocalStorage = cartFactory(HeaderCart);
 
   return (
     <header className="container">

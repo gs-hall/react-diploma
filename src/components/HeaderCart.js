@@ -5,6 +5,7 @@ import { selectCountInCart } from "../features/cart/cartSlice";
 
 export default function HeaderCart() {
   const productCount = useSelector(selectCountInCart);
+  console.log('HeaderCart productCount', productCount);
 
   return (
     <Link to="/cart" >

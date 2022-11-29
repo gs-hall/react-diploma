@@ -4,7 +4,7 @@ import Order from "../components/Order";
 import cartFactory from "../features/cart/cartFactory";
 
 export default function CartPage() {
-  const CartWithLocalStorage = cartFactory({ WrappedComponent: Cart });
+  const CartWithLocalStorage = cartFactory(Cart);
 
   return (
     <CartWithLocalStorage>

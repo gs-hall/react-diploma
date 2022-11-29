@@ -9,7 +9,7 @@ export const withLocalStorage = ({ WrappedComponent, selector, actions, localSto
   console.log('withLocalStorage result AFTER transformation= ', transformed);
 
   return (
-    <WrappedComponent data={transformed} { ...rest } { ...props } >
+    <WrappedComponent data={ transformed } actions={ actions } { ...rest } { ...props } >
       { props.children }
     </WrappedComponent>
   );
