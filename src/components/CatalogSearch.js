@@ -8,7 +8,7 @@ export default function CatalogSearch() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('handleSubmit', e.target.search.value);
+    //console.log('handleSubmit', e.target.search.value);
     dispatch(startSearchCatalog(e.target.search.value));
   };
 

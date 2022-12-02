@@ -7,6 +7,7 @@ import categoryReducer, {
 } from '../features/category/categorySlice';
 import productReducer, { actionGetProduct, effectGetProduct } from '../features/product/productSlice';
 import cartReducer from '../features/cart/cartSlice';
+import orderReducer, { actionPostOrder, effectPostOrder } from '../features/order/orderSlice';
 
 const listenerMiddleware = createListenerMiddleware()
 
@@ -35,13 +36,20 @@ listenerMiddleware.startListening({
   effect: effectGetProduct
 });
 
+listenerMiddleware.startListening({
+  actionCreator: actionPostOrder,
+  effect: effectPostOrder
+});
+
+
 export const store = configureStore({
   reducer: {
     topSales: topSalesReducer,
     catalog: catalogReducer,
     category: categoryReducer,
     product: productReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    order: orderReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

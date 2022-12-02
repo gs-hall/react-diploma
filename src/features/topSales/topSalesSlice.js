@@ -13,26 +13,26 @@ export const topSalesSlice = createSlice({
   initialState,
   reducers: {
     actionGetTopSales: (state, action) => {
-      console.log('actionGetTopSales', action.payload);
+      //console.log('actionGetTopSales', action.payload);
       state.isLoading = true;
       state.isError = false;
       state.isReloadRequired = false;
     },
     actionTopSalesLoaded: (state, action) => {
-      console.log('actionTopSalesLoaded', action.payload);
+      //console.log('actionTopSalesLoaded', action.payload);
       state.data = action.payload;
       state.isLoading = false;
       state.isError = false;
-    },    
+    },
     actionTopSalesLoadFailed: (state, action) => {
-      console.log('actionTopSalesLoadFailed', action.payload);
+      //console.log('actionTopSalesLoadFailed', action.payload);
       state.isLoading = false;
       state.isError = action.payload;
     },
     actionReloadTopSales: (state) => {
-      console.log('actionReloadTopSales');
+      //console.log('actionReloadTopSales');
       state.isReloadRequired = true;
-    }    
+    }
   }
 });
 
@@ -42,11 +42,10 @@ export default topSalesSlice.reducer;
 
 export async function effectGetTopSales(action, listenerApi) {
   await effectFetchData({
-    action,
     listenerApi,
     url: process.env.REACT_APP_TOP_SALES_URL,
     successAction: actionTopSalesLoaded,
     failureAction: actionTopSalesLoadFailed
-  });  
+  });
 };
 

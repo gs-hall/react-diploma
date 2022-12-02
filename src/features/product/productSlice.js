@@ -13,26 +13,26 @@ export const productSlice = createSlice({
   initialState,
   reducers: {
     actionGetProduct: (state, action) => {
-      console.log('actionGetProduct', action.payload);
+      //console.log('actionGetProduct', action.payload);
       state.data = null;
       state.isLoading = true;
       state.isError = false;
     },
     actionProductLoaded: (state, action) => {
-      console.log('actionProductLoaded', action.payload);
+      //console.log('actionProductLoaded', action.payload);
       state.data = action.payload;
       state.isLoading = false;
       state.isError = false;
       state.isReloadRequired = false;
-    },    
+    },
     actionProductLoadFailed: (state, action) => {
-      console.log('actionProductLoadFailed', action.payload);
+      //onsole.log('actionProductLoadFailed', action.payload);
       state.isLoading = false;
       state.isError = action.payload;
       state.isReloadRequired = false;
     },
     actionReloadProduct: (state) => {
-      console.log('actionReloadProduct');
+      //console.log('actionReloadProduct');
       state.isReloadRequired = true;
     }
 }});
@@ -43,11 +43,10 @@ export const selectProduct = (state) => state.product;
 export default productSlice.reducer;
 
 export async function effectGetProduct(action, listenerApi) {
-  console.log('effectGetProduct', action.payload);
+  //console.log('effectGetProduct', action.payload);
   const { itemID } = action.payload;
 
   await effectFetchData({
-    action,
     listenerApi,
     url: `${process.env.REACT_APP_CATALOG_URL}/${itemID}`,
     successAction: actionProductLoaded,

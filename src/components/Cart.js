@@ -3,7 +3,7 @@ import CartTable from "./CartTable";
 import { Link } from "react-router-dom";
 
 export default function Cart({ data, children, ...rest}) {
-  console.log('Cart data = ', data);
+  //console.log('Cart data = ', data);
 
   if (data == null || Object.keys(data).length === 0) {
     return (

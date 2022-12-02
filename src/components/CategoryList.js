@@ -4,7 +4,7 @@ import CategoryItem from "./CategoryItem";
 export default function CategoryList(props) {
   const { data, activeItemID, actions } = props;
   if (data === null) return;
-  console.log('CategoryList', props);
+  //console.log('CategoryList', props);
   return (
     <ul className="catalog-categories nav justify-content-center">
       {data?.map(item =>
@@ -15,6 +15,6 @@ export default function CategoryList(props) {
           onClick={ () => actions.dispatch(actions.setActive({ activeItemID: item.id })) }
           />
       )}
-    </ul>  
+    </ul>
   );
 };

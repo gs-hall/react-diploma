@@ -2,7 +2,7 @@ import React from "react";
 import TopSalesItem from "./TopSalesItem";
 
 export default function TopSales({ data, isLoading, isError, children }) {
-  console.log('isLoading', isLoading);
+  //console.log('isLoading', isLoading);
   return (
     <section className="top-sales">
       <h2 className="text-center">Хиты продаж!</h2>

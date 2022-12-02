@@ -33,7 +33,7 @@ export const categorySlice = createSlice({
       state.data = items;
       state.isLoading = false;
       state.isError = false;
-    },    
+    },
     actionCategoryLoadFailed: (state, action) => {
       console.log('actionCategoryLoadFailed', action.payload);
       state.isLoading = false;
@@ -58,7 +58,6 @@ export default categorySlice.reducer;
 export async function effectGetCategory(action, listenerApi) {
   console.log('effectGetCategory', action, action.payload);
   await effectFetchData({
-    action,
     listenerApi,
     url: process.env.REACT_APP_CATEGORY_URL,
     successAction: actionCategoryLoaded,

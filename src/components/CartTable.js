@@ -12,7 +12,7 @@ export default function CartTable({ items, actions }) {
   const dispatch = useDispatch();
 
   if (!items) return null;
-  console.log('CartTable', items);
+  //console.log('CartTable', items);
 
   return (
     <table className="table table-bordered">

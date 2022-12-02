@@ -9,20 +9,20 @@ export default function ProductSizeList({ product, activeItemID, actions }) {
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
-    console.log('handleAddToCart', size, count);
+    //console.log('handleAddToCart', size, count);
     const { id, title, price } = product;
     dispatch(addToCart({ id, title, price, size, count }));
   };
 
   const handleChangeCount = (newCount) => {
-    console.log('handleChangeCount', newCount);
+    //console.log('handleChangeCount', newCount);
     if (size && newCount >= 1 && newCount <= 10) {
       setCount(newCount);
     };
   };
 
   const handleSelectSize = (newSize) => {
-    console.log('handleSelectSize', newSize);
+    //console.log('handleSelectSize', newSize);
     setSize(newSize);
     setCount(1);
   };
