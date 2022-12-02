@@ -64,5 +64,6 @@ export const getCartAsArray = (data) => { // convert to array
       data[productID][size]
     ))));
 };
-export const selectCountInCart = (state) => (state.cart.data == null ? 0 : Object.keys(state.cart.data).length);
+export const selectCountInCart = (state) => (state.cart.data == null || Object.keys(state.cart.data) === 0 ? 0
+  : Object.keys(state.cart.data).reduce( (sum, product) => (sum + Object.keys(state.cart.data[product]).length), 0 ));
 export default cartSlice.reducer;

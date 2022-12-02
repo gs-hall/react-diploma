@@ -30,7 +30,7 @@ export default function CartTable({ items, actions }) {
       <tbody>
         { items?.map((item, index) =>
           <CartTableItem
-            key={ item.id }
+            key={ item.id + item.size }
             item={ item }
             index={ index+1 }
             onDelete={ () => dispatch(actions.deleteItem({ id: item.id, size: item.size })) }
