@@ -1,4 +1,4 @@
-import { createSlice, current } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 
 export const localStorageCartKey = 'cart';
 
@@ -58,6 +58,7 @@ export const { addToCart, setCartData, deleteFromCart } = cartSlice.actions;
 export const selectCartData = (state) => state.cart.data;
 
 export const getCartAsArray = (data) => { // convert to array
+  if (data == null) return null;
   //console.log('getCartAsArray data = ', data);
   return Object.keys(data)?.flatMap(productID => (
     Object.keys(data[productID])?.map(size => (
@@ -67,4 +68,7 @@ export const getCartAsArray = (data) => { // convert to array
 
 export const selectCountInCart = (state) => (state.cart.data == null || Object.keys(state.cart.data) === 0 ? 0
   : Object.keys(state.cart.data).reduce( (sum, product) => (sum + Object.keys(state.cart.data[product]).length), 0 ));
+
+export const selectCartDataAsArray = (state) => getCartAsArray(state.cart.data);
+
 export default cartSlice.reducer;

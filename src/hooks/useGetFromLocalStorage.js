@@ -11,7 +11,7 @@ export default function useGetFromLocalStorage(selector, setDataAction, localSto
     if (data == null) {
       //console.log('useGetFromLocalStorage loading data from local storage =', localStorageKey);
       const dataFromLocalStorage = JSON.parse(localStorage.getItem(localStorageKey));
-      //console.log('useGetFromLocalStorage loaded data =', dataFromLocalStorage);
+      console.log('useGetFromLocalStorage loaded data from LS =', dataFromLocalStorage);
       if (dataFromLocalStorage) {
         dispatch(setDataAction(dataFromLocalStorage));
       };

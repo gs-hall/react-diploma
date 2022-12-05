@@ -1,14 +1,12 @@
-import React, { useState } from "react"
-import { useDispatch } from "react-redux";
+import React from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { selectCartDataAsArray } from "../features/cart/cartSlice";
 import { actionPostOrder } from "../features/order/orderSlice";
 
-export default function Order() {
+export default function Order({ data, actions }) {
   const dispatch = useDispatch();
-  const [orderForm, setOrderForm] = useState({
-    phone: '',
-    address: '',
-    agreement: false
-  });
+  const orderItems = useSelector(selectCartDataAsArray);
+  console.log('orderItems = ', orderItems);
 
   const cardStyle = {
     maxWidth: "30rem",
@@ -18,12 +16,19 @@ export default function Order() {
   const handleOrderFormChange = (e) => {
     const {name, value} = e.target;
     //console.log('handleOrderFormChange', name, value);
-    setOrderForm((prevForm) => ({ ...prevForm, [name]: value }));
+    dispatch(actions.setData({ ...data, [name]: value }));
   };
 
   const handleSubmitOrder = (e) => {
     e.preventDefault();
-    dispatch(actionPostOrder(orderForm));
+    const order = {
+      owner: {
+        phone: data.phone,
+        address: data.address,
+      },
+      items: orderItems
+    };
+    dispatch(actionPostOrder({ order }));
   };
 
   return (
@@ -38,7 +43,7 @@ export default function Order() {
               id="phone"
               name="phone"
               placeholder="Ваш телефон"
-              value={orderForm.phone}
+              value={data.phone}
               onChange={ handleOrderFormChange }
               />
           </div>
@@ -49,7 +54,7 @@ export default function Order() {
               id="address"
               name="address"
               placeholder="Адрес доставки"
-              value={orderForm.address}
+              value={data.address}
               onChange={ handleOrderFormChange }
               />
           </div>
@@ -59,8 +64,8 @@ export default function Order() {
               className="form-check-input"
               id="agreement"
               name="agreement"
-              value={orderForm.agreement}
-              onChange={ () => setOrderForm(prevForm => ({ ...prevForm, agreement: !prevForm.agreement })) }
+              value={data.agreement}
+              onChange={ () => dispatch(actions.setData({ ...data, agreement: !data.agreement })) }
               />
             <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
           </div>
@@ -68,7 +73,7 @@ export default function Order() {
             type="submit"
             className="btn btn-outline-secondary"
             onClick={ handleSubmitOrder }
-            disabled={ orderForm.phone === '' || orderForm.address === '' || !orderForm.agreement } >Оформить</button>
+            disabled={ data.phone === '' || data.address === '' || !data.agreement } >Оформить</button>
         </form>
       </div>
     </section>

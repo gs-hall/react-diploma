@@ -84,7 +84,9 @@ router.get('/api/items/:id', async (ctx, next) => {
 });
 
 router.post('/api/order', async (ctx, next) => {
-    const { owner: { phone, address }, items } = ctx.request.body;
+    console.log('body = ', ctx.request.body);
+    const { owner: { phone, address }, items } = JSON.parse(ctx.request.body);
+    console.log('phone = ', phone);
     if (typeof phone !== 'string') {
         return fortune(ctx, 'Bad Request: Phone', 400);
     }

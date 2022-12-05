@@ -4,7 +4,11 @@ import { effectPostData } from '../../api/api';
 export const localStorageOrderKey = 'order';
 
 const initialState = {
-  data: null,
+  data: {
+    phone: '',
+    address: '',
+    agreement: false
+  },
   isLoading: false,
   isError: false
 };
@@ -13,31 +17,29 @@ export const orderSlice = createSlice({
   name: 'order',
   initialState,
   reducers: {
-    actionPostOrder: (state, action) => {
-      console.log('actionPostOrder', action.payload);
-      const { order } = action.payload;
-      state.data = order;
+    actionPostOrder: (state) => {
       state.isLoading = true;
       state.isError = false;
-      localStorage.setItem(localStorageOrderKey, JSON.stringify(order));
     },
-    actionOrderPosted: (state, action) => {
+    actionOrderPosted: () => { // order was successfully posted
       console.log('actionOrderPosted');
-      state.data = null;
-      state.isLoading = false;
-      state.isError = false;
       localStorage.removeItem(localStorageOrderKey);
+      return initialState;
     },
     actionOrderPostFailed: (state, action) => {
       console.log('actionOrderPostFailed', action.payload);
       state.isLoading = false;
       state.isError = true;
       state.isReloadRequired = false;
-    }
+    },
+    setOrderData: (state, action) => {
+      console.log('setOrderData', action.payload);
+      state.data = action.payload;
+    },
 }});
 
-export const { actionPostOrder, actionOrderPosted, actionOrderPostFailed } = orderSlice.actions;
-export const selectOrder = (state) => state.order;
+export const { actionPostOrder, actionOrderPosted, actionOrderPostFailed, setOrderData } = orderSlice.actions;
+export const selectOrderData = (state) => state.order.data;
 
 export default orderSlice.reducer;
 
@@ -53,4 +55,5 @@ export async function effectPostOrder(action, listenerApi) {
     successAction: actionOrderPosted,
     failureAction: actionOrderPostFailed
   });
+  localStorage.setItem(localStorageOrderKey, JSON.stringify(order));
 };

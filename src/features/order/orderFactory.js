@@ -1,16 +1,14 @@
-import { withApi } from "../../hoc/withApi";
-import ProductDetails from "../../components/Product";
-import { selectProduct, actionGetProduct, actionReloadProduct } from "./orderSlice";
+import { withLocalStorage } from "../../hoc/withLocalStorage";
+import Order from "../../components/Order";
+import { localStorageOrderKey, selectOrderData, setOrderData } from "./orderSlice";
 
-export default function productFactory({ itemID }) {
-  //console.log('productFactory', itemID);
-  return withApi({
-    WrappedComponent: ProductDetails,
-    selector: selectProduct,
+export default function orderFactory() {
+  return withLocalStorage({
+    WrappedComponent: Order,
+    selector: selectOrderData,
     actions: {
-      load: actionGetProduct,
-      reload: actionReloadProduct
+      setData: setOrderData
     },
-    itemID
+    localStorageKey: localStorageOrderKey
   });
 };
