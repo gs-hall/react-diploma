@@ -8,7 +8,9 @@ import categoryReducer, {
 import productReducer, { actionGetProduct, effectGetProduct } from '../features/product/productSlice';
 import cartReducer from '../features/cart/cartSlice';
 import orderReducer, { actionPostOrder, effectPostOrder } from '../features/order/orderSlice';
-
+import { topSalesApi } from './services/topSalesApi';
+import { setupListeners } from '@reduxjs/toolkit/query';
+/*
 const listenerMiddleware = createListenerMiddleware()
 
 listenerMiddleware.startListening({
@@ -40,22 +42,23 @@ listenerMiddleware.startListening({
   actionCreator: actionPostOrder,
   effect: effectPostOrder
 });
-
+*/
 
 export const store = configureStore({
   reducer: {
-    topSales: topSalesReducer,
+    //topSales: topSalesReducer,
     catalog: catalogReducer,
     category: categoryReducer,
     product: productReducer,
     cart: cartReducer,
-    order: orderReducer
+    order: orderReducer,
+    [topSalesApi.reducerPath]: topSalesApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: true,
-      thunk: false
-    })
-    .prepend(listenerMiddleware.middleware),
+    getDefaultMiddleware()
+    //.prepend(listenerMiddleware.middleware)
+    .concat(topSalesApi.middleware),
   devTools: process.env.NODE_ENV !== 'production'
 });
+
+setupListeners(store.dispatch);

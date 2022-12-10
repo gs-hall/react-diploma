@@ -1,19 +1,22 @@
 import React from "react";
-import Banner from "./Banner";
+//import Banner from "./Banner";
 
 interface ErrorProps {
-  title: string;
+  title?: string;
   message: string;
+  refetch: any;
+  isLoading: boolean;
 };
 
-export default function Error({ title, message }: ErrorProps) {
-  if (!message) return null;
+export default function Error({ title, message, refetch, isLoading }: ErrorProps) {
+  if (isLoading || !message) return null;
+  // <Banner />
   return (
     <>
-      <Banner />
       <section className="top-sales">
         <h2 className="text-center">{title || message}</h2>
         <p>{message}</p>
+        <button onClick={() => refetch()} className="btn btn-outline-primary">Попробовать еще раз...</button>
       </section>
     </>
   );
