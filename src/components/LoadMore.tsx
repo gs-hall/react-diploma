@@ -1,6 +1,10 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 
-export default function LoadMore({ onClick }) {
+interface LoadMoreProps {
+  onClick: MouseEventHandler
+};
+
+export default function LoadMore({ onClick }: LoadMoreProps) {
   if (!onClick) return;
   return (
     <div className="text-center">

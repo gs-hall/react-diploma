@@ -4,6 +4,7 @@ import Logo from "./Logo";
 import classnames from 'classnames';
 import HeaderSearch from "./HeaderSearch";
 import HeaderCart from "./HeaderCart";
+// @ts-ignore
 import cartFactory from "../features/cart/cartFactory";
 
 const menu = [

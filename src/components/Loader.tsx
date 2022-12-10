@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Loader({ isLoading = true }) {
+interface LoaderProps {
+  isLoading: boolean
+};
+
+export default function Loader({ isLoading = true }: LoaderProps) {
   if (!isLoading) return null;
   //console.log('Loader');
   return (

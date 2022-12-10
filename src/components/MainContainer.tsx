@@ -1,11 +1,15 @@
 import React from "react";
 
-export default function MainContainer(props) {
+interface MainContainerProps {
+  children: React.ReactNode
+};
+
+export default function MainContainer({ children }: MainContainerProps) {
   return (
     <main className="container">
       <div className="row">
         <div className="col">
-          { props.children }
+          { children }
         </div>
       </div>
     </main>

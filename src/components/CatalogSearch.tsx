@@ -1,15 +1,15 @@
 import React from "react";
 import { useSelector, useDispatch } from 'react-redux';
+// @ts-ignore
 import { selectSearchCatalog, setSearchCatalog, startSearchCatalog } from "../features/catalog/catalogSlice";
 
 export default function CatalogSearch() {
   const dispatch = useDispatch();
-  const search = useSelector(selectSearchCatalog);
+  const search: string = useSelector(selectSearchCatalog);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    //console.log('handleSubmit', e.target.search.value);
-    dispatch(startSearchCatalog(e.target.search.value));
+    dispatch(startSearchCatalog(e.currentTarget.value));
   };
 
   return (

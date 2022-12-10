@@ -1,12 +1,19 @@
-// Represents an element in catalog list
-
 import React from "react";
 import { Link } from "react-router-dom";
 
-export default function CatalogListItem({ item }) {
+interface TopSalesItemProps {
+  item: {
+    id: number;
+    title: string;
+    price: number;
+    images: string[];
+  };
+};
+
+export default function TopSalesItem({ item }: TopSalesItemProps) {
   return (
     <div className="col-4">
-      <div className="card catalog-item-card">
+      <div className="card">
         <img
           src={item.images[0]}
           className="card-img-top img-fluid"
@@ -14,7 +21,7 @@ export default function CatalogListItem({ item }) {
           />
         <div className="card-body">
           <p className="card-text">{item.title}</p>
-          <p className="card-text">{item.price} руб.</p>
+          <p className="card-text">{item.price}</p>
           <Link to={`/products/${item.id}`} className="btn btn-outline-primary">Заказать</Link>
         </div>
       </div>

@@ -1,11 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+// @ts-ignore
 import { selectCountInCart } from "../features/cart/cartSlice";
 
+
 export default function HeaderCart() {
-  const productCount = useSelector(selectCountInCart);
-  //console.log('HeaderCart productCount', productCount);
+  const productCount: number = useSelector(selectCountInCart);
 
   return (
     <Link to="/cart" >
@@ -14,4 +15,4 @@ export default function HeaderCart() {
     </div>
     </Link>
   );
-}; // <div className="header-controls-cart-menu"></div>
+};

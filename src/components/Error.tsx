@@ -1,7 +1,12 @@
 import React from "react";
 import Banner from "./Banner";
 
-export default function Error({ title, message }) {
+interface ErrorProps {
+  title: string;
+  message: string;
+};
+
+export default function Error({ title, message }: ErrorProps) {
   if (!message) return null;
   return (
     <>

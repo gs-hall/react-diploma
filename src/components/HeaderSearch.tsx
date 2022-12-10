@@ -2,32 +2,33 @@ import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from "react-router-dom";
+// @ts-ignore
 import { selectSearchCatalog, setSearchCatalog, startSearchCatalog } from "../features/catalog/catalogSlice";
 
 const catalogLink = '/catalog';
 
 export default function HeaderSearch() {
   const dispatch = useDispatch();
-  const search = useSelector(selectSearchCatalog);
+  const search: string = useSelector(selectSearchCatalog);
   const [isHidden, setIsHidden] = useState(true);
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     if (!isHidden) {
-      inputRef.current.focus();
+      inputRef?.current?.focus();
     }
   }, [isHidden]);
 
   // expand search
-  const handleClick = (e) => {
-    inputRef.current.focus();
+  const handleClick = () => {
+    inputRef?.current?.focus();
     setIsHidden(!isHidden);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const searchText = e.target.search.value;
+    const searchText = e.currentTarget.value;
     if (searchText === '') { // user entered nothing
       setIsHidden(true);
     } else { // start search
