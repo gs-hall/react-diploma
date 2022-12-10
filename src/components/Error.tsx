@@ -16,7 +16,7 @@ export default function Error({ title, message, refetch, isLoading }: ErrorProps
       <section className="top-sales">
         <h2 className="text-center">{title || message}</h2>
         <p>{message}</p>
-        <button onClick={() => refetch()} className="btn btn-outline-primary">Попробовать еще раз...</button>
+        <button onClick={refetch} className="btn btn-outline-primary">Попробовать еще раз...</button>
       </section>
     </>
   );
