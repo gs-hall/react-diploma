@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { topSalesItem, categoryItem, catalogItems } from "../../types/types";
-import { categoryAllOption } from '../../features/category/categorySlice';
+import { categoryAllOption } from '../../features/catalog/catalogSlice';
 
 
 interface getCatalogArgs {

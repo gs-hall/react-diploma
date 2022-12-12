@@ -1,10 +1,12 @@
-import React, { useState } from "react"
+import React from "react"
 import CatalogItem from "./CatalogItem";
 import Error from "./Error";
 import Loader from "./Loader";
 import LoadMore from "./LoadMore";
 import { catalogItem } from "../types/types";
-import useInfiniteScroll from "../hooks/useInfiniteScroll";
+import useCatalogInfiniteScroll from "../hooks/useCatalogInfiniteScroll";
+import { increaseCatalogOffset, selectCatalogOffset } from "../features/catalog/catalogSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 interface CatalogProps {
   children: React.ReactNode
@@ -12,8 +14,9 @@ interface CatalogProps {
 
 export default function Catalog({ children }: CatalogProps) {
   const loadMoreCount = 6;
-  const [offset, setOffset] = useState(0);
-  const { data, error, isLoading, isFetching, refetch, lastLoadedItemCount } = useInfiniteScroll({ offset });
+  const dispatch = useDispatch();
+  const offset = useSelector(selectCatalogOffset);
+  const { data, error, isLoading, isFetching, refetch, lastLoadedItemCount } = useCatalogInfiniteScroll({ offset });
 
   return (
     <section className="catalog">
@@ -25,7 +28,7 @@ export default function Catalog({ children }: CatalogProps) {
         <div className="row">
           { data?.map((item:catalogItem) => <CatalogItem item={item} key={item.id} />) }
         </div>
-        { !isFetching && loadMoreCount && loadMoreCount === lastLoadedItemCount && <LoadMore onClick={() => setOffset(prevOffset => (prevOffset + loadMoreCount))} /> }
+        { !isFetching && loadMoreCount && loadMoreCount === lastLoadedItemCount && <LoadMore onClick={() => dispatch(increaseCatalogOffset({loadMoreCount}))} /> }
         <Loader isLoading={isFetching} />
       </>
     }

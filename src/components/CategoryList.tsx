@@ -1,11 +1,15 @@
-import React, { useState } from "react"
+import React from "react"
+import { useDispatch, useSelector } from "react-redux";
 import { useGetCategoryListQuery } from "../app/services/shopApi";
-import { categoryAllOption } from "../features/category/categorySlice";
+import { selectActiveCategoryID, setActiveCategory } from "../features/catalog/catalogSlice";
+//import { actionSetActiveCategory, selectActiveCategoryID } from "../features/category/categorySlice";
 import CategoryItem from "./CategoryItem";
 import Error from "./Error";
 
 export default function CategoryList() {
-  const [activeItemID, setActiveItemID] = useState(categoryAllOption.id);
+  const activeCategoryID = useSelector(selectActiveCategoryID);
+  console.log('CategoryList', activeCategoryID);
+  const dispatch = useDispatch();
   const { data, error, isLoading, refetch } = useGetCategoryListQuery();
   if (data === null) return null;
 
@@ -17,8 +21,8 @@ export default function CategoryList() {
           <CategoryItem
             title={ item?.title }
             key={ item.id }
-            isActive={ item.id === activeItemID }
-            onClick={ () => setActiveItemID(item.id) }
+            isActive={ item.id === activeCategoryID }
+            onClick={ () => dispatch(setActiveCategory({activeCategoryID: item.id})) }
             />
         )}
       </ul>
