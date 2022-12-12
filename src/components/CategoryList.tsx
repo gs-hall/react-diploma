@@ -1,12 +1,13 @@
 import React, { useState } from "react"
-import { useGetCategoryListQuery, categoryAllOption } from "../app/services/shopApi";
+import { useGetCategoryListQuery } from "../app/services/shopApi";
+import { categoryAllOption } from "../features/category/categorySlice";
 import CategoryItem from "./CategoryItem";
 import Error from "./Error";
 
 export default function CategoryList() {
   const [activeItemID, setActiveItemID] = useState(categoryAllOption.id);
   const { data, error, isLoading, refetch } = useGetCategoryListQuery();
-  if (data === null) return;
+  if (data === null) return null;
 
   return (
     <>

@@ -2,17 +2,14 @@
 
 import React from "react";
 import { Link } from "react-router-dom";
+import { catalogItem } from "../types/types";
 
-interface CatalogListItemProps {
-  item: {
-    id: number;
-    title: string;
-    price: number;
-    images: string[];
-  };
+interface CatalogItemProps {
+  item: catalogItem;
 };
 
-export default function CatalogListItem({ item }: CatalogListItemProps) {
+export default function CatalogItem({ item }: CatalogItemProps) {
+  console.log('CatalogItem', item);
   return (
     <div className="col-4">
       <div className="card catalog-item-card">

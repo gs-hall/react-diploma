@@ -1,5 +1,5 @@
 import { withApi } from "../../hoc/withApi";
-import CatalogList from "../../components/CatalogList";
+import CatalogList from "../../components/Catalog";
 import { selectCatalog, actionGetCatalog, actionReloadCatalog, actionLoadMoreCatalog } from "./catalogSlice";
 
 export default function catalogFactory() {

@@ -13,7 +13,7 @@ export default function TopSales() {
       { error && <Error message="Ошибка получения хитов продаж" refetch={refetch} isLoading={isLoading} /> }
       { data &&
         <div className="row">
-          {data.map(item => <TopSalesItem item={ item } key={ item.id } />) }
+          {data.map(item => <TopSalesItem item={item} key={item.id} />) }
         </div>
       }
     </section>

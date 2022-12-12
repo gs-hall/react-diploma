@@ -1,12 +1,10 @@
 import React from "react"
 import Banner from "../components/Banner";
+import Catalog from "../components/Catalog";
 import CatalogSearch from "../components/CatalogSearch";
-import catalogFactory from "../features/catalog/catalogFactory";
-import categoryListFactory from "../features/category/categoryListFactory";
+import CategoryList from "../components/CategoryList";
 
-export default function Catalog() {
-  const Catalog = catalogFactory();
-  const CategoryList = categoryListFactory();
+export default function CatalogPage() {
 
   return (
     <>
