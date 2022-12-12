@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useGetCatalogQuery } from "../app/services/shopApi";
 import { catalogItems } from "../types/types";
 
 const mergeData = (a: catalogItems, b: catalogItems) => {
@@ -8,15 +9,14 @@ const mergeData = (a: catalogItems, b: catalogItems) => {
 };
 
 interface useInfiniteScrollProps {
-  useQuery: any,
-  loadMoreCount: number,
   offset: number
 };
 
-export default function useInfiniteScroll({useQuery, loadMoreCount, offset}: useInfiniteScrollProps) {
+export default function useCatalogInfiniteScroll({offset}: useInfiniteScrollProps) {
   const [combinedData, setCombinedData] = useState<catalogItems>([]);
 
-  const { data, ...rest } = useQuery({offset});
+  const { data, ...rest } = useGetCatalogQuery({offset});
+  const lastLoadedItemCount = data?.length;
 
   useEffect(() => {
     if (data){
@@ -28,5 +28,5 @@ export default function useInfiniteScroll({useQuery, loadMoreCount, offset}: use
     };
   }, [data, offset]);
 
-  return {data: combinedData, ...rest};
+  return {data: combinedData, lastLoadedItemCount, ...rest};
 };

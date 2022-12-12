@@ -1,6 +1,4 @@
 import React, { useState } from "react"
-import { useGetCatalogQuery } from "../app/services/shopApi";
-//import useInfiniteScroll from "../hooks/useInfiniteScroll";
 import CatalogItem from "./CatalogItem";
 import Error from "./Error";
 import Loader from "./Loader";
@@ -13,39 +11,9 @@ interface CatalogProps {
 };
 
 export default function Catalog({ children }: CatalogProps) {
-  const [offset, setOffset] = useState(0);
-  //const [combinedData, setCombinedData] = useState<catalogItems>([]);
   const loadMoreCount = 6;
-  const { data, error, isLoading, refetch } = useInfiniteScroll({
-    useQuery: useGetCatalogQuery,
-    loadMoreCount: 6,
-    offset });
-
-  //const { data, error, isLoading, refetch } = useGetCatalogQuery({offset});
-
-  /*
-  useEffect(() => {
-    if (data){
-      if (offset === 0) {
-        setCombinedData(data);
-      } else {
-        setCombinedData((prevData) => mergeData(prevData, data));
-      };
-    };
-  }, [data, offset]);
-  */
-  //const combinedData = useInfiniteScroll({ useQuery: useGetCatalogQuery, currentData: data, loadMoreCount, offset });
-  //console.log(combinedData);
-
-
-  const handleLoadMore = (e: React.MouseEvent) => {
-    setOffset(prevOffset => (prevOffset + loadMoreCount));
-    console.log('handleLoadMore, offset=', offset);
-    //dispatch(loadMore({ count: props.loadMoreCount }));
-  };
-
-  const lastLoadedItemCount = 6;
-
+  const [offset, setOffset] = useState(0);
+  const { data, error, isLoading, isFetching, refetch, lastLoadedItemCount } = useInfiniteScroll({ offset });
 
   return (
     <section className="catalog">
@@ -57,8 +25,8 @@ export default function Catalog({ children }: CatalogProps) {
         <div className="row">
           { data?.map((item:catalogItem) => <CatalogItem item={item} key={item.id} />) }
         </div>
-        { !isLoading && loadMoreCount && loadMoreCount === lastLoadedItemCount && <LoadMore onClick={handleLoadMore} /> }
-        <Loader isLoading={isLoading} />
+        { !isFetching && loadMoreCount && loadMoreCount === lastLoadedItemCount && <LoadMore onClick={() => setOffset(prevOffset => (prevOffset + loadMoreCount))} /> }
+        <Loader isLoading={isFetching} />
       </>
     }
   </section>

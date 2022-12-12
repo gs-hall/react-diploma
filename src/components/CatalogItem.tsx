@@ -9,7 +9,7 @@ interface CatalogItemProps {
 };
 
 export default function CatalogItem({ item }: CatalogItemProps) {
-  console.log('CatalogItem', item);
+  //console.log('CatalogItem', item);
   return (
     <div className="col-4">
       <div className="card catalog-item-card">
