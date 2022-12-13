@@ -21,12 +21,12 @@ function App() {
       <Header />
       <MainContainer>
         <Routes>
-          <Route path="/" exact element={ <Main /> } />
-          <Route path="/catalog" exact element={ <Catalog /> } />
-          <Route path="/about" exact element={ <About /> } />
-          <Route path="/contacts" exact element={ <Contacts /> } />
-          <Route path="/products/:id" exact element={ <ProductPage /> } />
-          <Route path="/cart" exact element={ <CartPage /> } />
+          <Route path="/" element={ <Main /> } />
+          <Route path="/catalog" element={ <Catalog /> } />
+          <Route path="/about" element={ <About /> } />
+          <Route path="/contacts" element={ <Contacts /> } />
+          <Route path="/products/:id" element={ <ProductPage /> } />
+          <Route path="/cart" element={ <CartPage /> } />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </MainContainer>
