@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-import { topSalesItem, categoryItem, catalogItems } from "../../types/types";
+import { topSalesItem, categoryItem, catalogItems, productItem } from "../../types/types";
 import { categoryAllOption } from '../../features/catalog/catalogSlice';
 
 
@@ -23,7 +23,10 @@ export const shopApi = createApi({
     getCatalog: build.query<catalogItems, getCatalogArgs>({
       query: (args) => ({url: 'items', params: args}),
     }),
+    getProduct: build.query<productItem, number>({
+      query: (id) => ({url: `items/${id}`}),
+    }),
   }),
 })
 
-export const { useGetTopSalesQuery, useGetCategoryListQuery, useGetCatalogQuery } = shopApi;
+export const { useGetTopSalesQuery, useGetCategoryListQuery, useGetCatalogQuery, useGetProductQuery } = shopApi;

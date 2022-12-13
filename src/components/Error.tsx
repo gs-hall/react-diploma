@@ -4,8 +4,8 @@ import React from "react";
 interface ErrorProps {
   title?: string;
   message: string;
-  refetch: any;
-  isLoading: boolean;
+  refetch?: any;
+  isLoading?: boolean;
 };
 
 export default function Error({ title, message, refetch, isLoading }: ErrorProps) {

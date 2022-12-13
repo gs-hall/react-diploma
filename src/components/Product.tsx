@@ -1,16 +1,25 @@
 // Represents a detailed product (aka 'catalog item') description (for product page)
 
 import React from "react";
+import { useGetProductQuery } from "../app/services/shopApi";
+import Error from "./Error";
+import Loader from "./Loader";
 import ProductSizeList from "./ProductSizeList";
 
-export default function Product(props) {
-  if (!props.data) return props.children;
+interface ProductProps {
+  productID: number
+};
 
-  const { id, title, images, sku, manufacturer, color, material, season, reason, price, sizes } = props.data;
+export default function Product({productID}: ProductProps) {
+  const { data, isLoading, error, refetch } = useGetProductQuery(productID);
+  if (error || !data) {
+    return <Error message="Ошибка получения продукта" refetch={refetch} isLoading={isLoading} />
+  };
+  const { title, images, sku, manufacturer, color, material, season, reason } = data;
 
   return (
     <section className="catalog-item">
-      { props.children }
+      <Loader isLoading={isLoading} />
       { title &&
       <>
         <h2 className="text-center">{title}</h2>
@@ -51,7 +60,7 @@ export default function Product(props) {
                 </tr>
               </tbody>
             </table>
-            <ProductSizeList product={{ id, title, price, sizes }} />
+            <ProductSizeList product={data} />
           </div>
         </div>
       </>

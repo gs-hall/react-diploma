@@ -1,11 +1,17 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
+// @ts-ignore
 import { addToCart } from "../features/cart/cartSlice";
+import { productItem } from "../types/types";
 
-export default function ProductSizeList({ product, activeItemID, actions }) {
-  const [size, setSize] = useState(null);
-  const [count, setCount] = useState(1);
+interface ProductSizeListProps {
+  product: productItem
+};
+
+export default function ProductSizeList({ product }: ProductSizeListProps) {
+  const [size, setSize] = useState<string | null>(null);
+  const [count, setCount] = useState<number>(1);
   const dispatch = useDispatch();
 
   const handleAddToCart = () => {
@@ -14,20 +20,20 @@ export default function ProductSizeList({ product, activeItemID, actions }) {
     dispatch(addToCart({ id, title, price, size, count }));
   };
 
-  const handleChangeCount = (newCount) => {
+  const handleChangeCount = (newCount: number) => {
     //console.log('handleChangeCount', newCount);
     if (size && newCount >= 1 && newCount <= 10) {
       setCount(newCount);
     };
   };
 
-  const handleSelectSize = (newSize) => {
+  const handleSelectSize = (newSize: string) => {
     //console.log('handleSelectSize', newSize);
     setSize(newSize);
     setCount(1);
   };
 
-  if (product.sizes === null) return;
+  if (product.sizes === null) return null;
   const availableSizes = product.sizes.filter(x => (x.available));
   if (availableSizes.length === 0) return <p>Нет в наличии</p>;
 
