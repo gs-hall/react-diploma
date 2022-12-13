@@ -1,8 +1,15 @@
 import React from "react"
 import { Link } from "react-router-dom";
-import { numberWithSpaces } from "../utils/formatNumbers";
+import { numberWithSpaces } from "../utils/utils";
+import { CartItem as CartItemType } from "../types/types";
 
-export default function CartTableItem({ item, index, onDelete }) {
+interface CartTableItemProps {
+  item: CartItemType,
+  index: number,
+  onDelete: React.MouseEventHandler<HTMLButtonElement>
+};
+
+export default function CartTableItem({ item, index, onDelete }: CartTableItemProps) {
   return (
     <tr>
       <td>{index}</td>

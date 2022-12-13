@@ -1,7 +1,7 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import catalogReducer from '../features/catalog/catalogSlice';
 // @ts-ignore
-import cartReducer from '../features/cart/cartSlice';
+import cartReducer from '../features/cart/cartSlice.ts';
 // @ts-ignore
 import orderReducer, { actionPostOrder, effectPostOrder } from '../features/order/orderSlice';
 import { shopApi } from './services/shopApi';

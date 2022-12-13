@@ -16,7 +16,6 @@ export interface catalogItem {
   price: number;
   images: string[];
 };
-
 export type catalogItems = catalogItem[];
 
 export interface sizeItem {
@@ -39,5 +38,14 @@ export interface productItem {
   price: number;
   sizes: sizeItems;
 };
+
+export interface CartItem {
+  id: number;
+  title: string;
+  size: string;
+  price: number;
+  count: number;
+};
+export type CartItems = CartItem[];
 
 export type FixMeLater = any;

@@ -96,17 +96,3 @@ export const selectCatalog = (state: FixMeLater) => state.catalog;
 export const selectCatalogSearchText = (state: FixMeLater) => state.catalog.searchText;
 export const selectCatalogSearchParam = (state: FixMeLater) => state.catalog.searchParam;
 export default catalogSlice.reducer;
-/*
-export async function effectGetCatalog(action, listenerApi) {
-  //console.log('effectGetCatalog', action.payload);
-  const { params } = action.payload;
-
-  await effectFetchData({
-    listenerApi,
-    url: process.env.REACT_APP_CATALOG_URL,
-    params,
-    successAction: actionCatalogLoaded,
-    failureAction: actionCatalogLoadFailed
-  });
-};
-*/

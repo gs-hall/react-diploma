@@ -1,18 +1,17 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import CartTableItem from "./CartTableItem";
-import { numberWithSpaces } from "../utils/formatNumbers";
+import { numberWithSpaces, calcDotProduct } from "../utils/utils";
+import { deleteFromCart } from "../features/cart/cartSlice";
+import { CartItems } from "../types/types";
 
-// Calculates dot product of prices and counts
-function calcDotProduct(items, prop1, prop2) {
-  return items.reduce((a, b) => (a + b[prop1]*b[prop2]), 0);
+interface CartTableProps {
+  items: CartItems;
 };
 
-export default function CartTable({ items, actions }) {
+export default function CartTable({ items }: CartTableProps) {
   const dispatch = useDispatch();
-
   if (!items) return null;
-  //console.log('CartTable', items);
 
   return (
     <table className="table table-bordered">
@@ -33,11 +32,11 @@ export default function CartTable({ items, actions }) {
             key={ item.id + item.size }
             item={ item }
             index={ index+1 }
-            onDelete={ () => dispatch(actions.deleteItem({ id: item.id, size: item.size })) }
+            onDelete={ () => dispatch(deleteFromCart({ id: item.id, size: item.size })) }
             />
         )}
         <tr>
-          <td colSpan="5" className="text-right">Общая стоимость</td>
+          <td colSpan={5} className="text-right">Общая стоимость</td>
           <td>{ numberWithSpaces(calcDotProduct(items, "price", "count")) }&nbsp;руб.</td>
         </tr>
       </tbody>

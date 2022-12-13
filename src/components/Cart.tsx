@@ -1,11 +1,18 @@
 import React from "react";
 import CartTable from "./CartTable";
 import { Link } from "react-router-dom";
+import useGetCart from "../hooks/useGetCart";
 
-export default function Cart({ data, children, ...rest}) {
-  console.log('Cart data = ', data);
+interface CartProps {
+  children: React.ReactNode
+};
 
-  if (data == null || Object.keys(data).length === 0) {
+export default function Cart({ children }: CartProps) {
+  const items = useGetCart();
+
+  console.log('Cart data = ', items);
+
+  if (items == null || Object.keys(items).length === 0) {
     return (
       <>
         <br/><br/>
@@ -18,7 +25,7 @@ export default function Cart({ data, children, ...rest}) {
   return (
     <section className="cart">
       <h2 className="text-center">Корзина</h2>
-        <CartTable items={ data } { ...rest } />
+        <CartTable items={items} />
         { children }
     </section>
   );

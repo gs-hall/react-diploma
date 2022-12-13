@@ -4,8 +4,6 @@ import Logo from "./Logo";
 import classnames from 'classnames';
 import HeaderSearch from "./HeaderSearch";
 import HeaderCart from "./HeaderCart";
-// @ts-ignore
-import cartFactory from "../features/cart/cartFactory";
 
 const menu = [
   {link:"/", name:"Главная"},
@@ -15,8 +13,6 @@ const menu = [
 ];
 
 export default function Header() {
-  const HeaderCartWithLocalStorage = cartFactory(HeaderCart);
-
   return (
     <header className="container">
       <div className="row">
@@ -40,7 +36,7 @@ export default function Header() {
               <div>
                 <div className="header-controls-pics">
                   <HeaderSearch />
-                  <HeaderCartWithLocalStorage />
+                  <HeaderCart />
                 </div>
               </div>
             </div>

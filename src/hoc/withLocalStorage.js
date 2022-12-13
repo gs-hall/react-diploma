@@ -1,5 +1,5 @@
 import React from "react";
-import useGetFromLocalStorage from "../hooks/useGetFromLocalStorage";
+import useGetFromLocalStorage from "../hooks/useGetCart";
 
 export const withLocalStorage = ({ WrappedComponent, selector, actions, localStorageKey, dataTransformationFunction, ...rest }) => (props) => {
   const result = useGetFromLocalStorage(selector, actions.setData, localStorageKey);

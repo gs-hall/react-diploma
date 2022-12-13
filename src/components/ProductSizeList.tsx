@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 // @ts-ignore
-import { addToCart } from "../features/cart/cartSlice";
+import { addToCart } from "../features/cart/cartSlice.ts";
 import { productItem } from "../types/types";
 
 interface ProductSizeListProps {

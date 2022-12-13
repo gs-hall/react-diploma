@@ -1,12 +1,12 @@
 import React from "react";
-import { useSelector } from "react-redux";
+//import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-// @ts-ignore
-import { selectCountInCart } from "../features/cart/cartSlice";
-
+//import { selectCountInCart } from "../features/cart/cartSlice";
+import useGetCartCount from "../hooks/useGetCartCount";
+//import useGetCartFromLocalStorage from "../hooks/useGetCartFromLocalStorage";
 
 export default function HeaderCart() {
-  const productCount: number = useSelector(selectCountInCart);
+  const productCount: number = useGetCartCount() || 0;
 
   return (
     <Link to="/cart" >
