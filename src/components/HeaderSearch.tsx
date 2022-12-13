@@ -1,15 +1,14 @@
 import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-// @ts-ignore
-import { selectSearchCatalog, setSearchCatalog, startSearchCatalog } from "../features/catalog/catalogSlice";
+import { searchCatalog, selectCatalogSearchText, setCatalogSearchText } from "../features/catalog/catalogSlice";
 
 const catalogLink = '/catalog';
 
 export default function HeaderSearch() {
   const dispatch = useDispatch();
-  const search: string = useSelector(selectSearchCatalog);
+  const catalogSearch: string = useSelector(selectCatalogSearchText);
   const [isHidden, setIsHidden] = useState(true);
   const inputRef = useRef<HTMLInputElement>(null);
   const navigate = useNavigate();
@@ -28,12 +27,13 @@ export default function HeaderSearch() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const searchText = e.currentTarget.value;
+    const searchText = e.currentTarget["search"].value;
     if (searchText === '') { // user entered nothing
+      console.log('empty');
       setIsHidden(true);
     } else { // start search
-    navigate(catalogLink);
-    dispatch(startSearchCatalog());
+      navigate(catalogLink);
+      dispatch(searchCatalog());
     };
   };
 
@@ -50,8 +50,8 @@ export default function HeaderSearch() {
           placeholder="Поиск"
           ref={ inputRef }
           name="search"
-          value={ search }
-          onChange={ (e) => dispatch(setSearchCatalog(e.target.value)) }
+          value={ catalogSearch }
+          onChange={ (e) => dispatch(setCatalogSearchText({search: e.target.value})) }
           />
       </form>
     </>

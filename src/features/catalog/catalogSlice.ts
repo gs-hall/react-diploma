@@ -5,7 +5,8 @@ interface catalogStateProps {
   data: catalogItems | null,
   offset: number,
   activeCategoryID: number,
-  search: string,
+  searchText: string,
+  searchParam: string,
   lastLoadedItemCount: number | null
 };
 
@@ -19,6 +20,10 @@ interface setCatalogDataPayload {
 
 interface increaseCatalogOffsetPayload {
   loadMoreCount: number
+};
+
+interface searchCatalogPayload {
+  search: string
 };
 
 const mergeData = (a: catalogItems, b: catalogItems) => {
@@ -37,7 +42,8 @@ const initialState: catalogStateProps = {
   offset: 0,
   lastLoadedItemCount: null,
   activeCategoryID: categoryAllOption.id,
-  search: ''
+  searchText: '', // for displaying
+  searchParam: '' // for API
 };
 
 export const catalogSlice = createSlice({
@@ -64,29 +70,31 @@ export const catalogSlice = createSlice({
       console.log('increaseCatalogOffset', action.payload);
       state.offset += action.payload.loadMoreCount;
     },
-    setSearchCatalog:  (state, action) => {
+    setCatalogSearchText:  (state, action: PayloadAction<searchCatalogPayload>) => {
       //console.log('setSearchCatalog', action.payload);
-      if (state.search !== '' && action.payload ==='') { // cleared search
+      if (state.searchText !== '' && action.payload.search ==='') { // cleared search
         state.data = [];
-        //state.params.q = '';
-        //state.params.offset = 0;
+        state.searchParam = '';
+        state.offset = 0;
       };
-      state.search = action.payload;
+      state.searchText = action.payload.search;
     },
-    startSearchCatalog:  (state, action) => {
-      //console.log('setSearchCatalog');
-      //state.params.q = state.search;
-      state.data = [];
+    searchCatalog:  (state) => {
+      if (state.searchParam !== state.searchText) { // search changed
+        state.data = [];
+        state.searchParam = state.searchText;
+      };
     },
   }
 });
 
-export const { setActiveCategory, setCatalogData, increaseCatalogOffset, addCatalogData, setSearchCatalog, startSearchCatalog } = catalogSlice.actions;
+export const { setActiveCategory, setCatalogData, increaseCatalogOffset, addCatalogData, setCatalogSearchText, searchCatalog } = catalogSlice.actions;
 export const selectActiveCategoryID = (state: FixMeLater) => state.catalog.activeCategoryID;
 export const selectCatalogOffset = (state: FixMeLater) => state.catalog.offset;
 export const selectCatalogData = (state: FixMeLater) => state.catalog.data;
 export const selectCatalog = (state: FixMeLater) => state.catalog;
-export const selectSearchCatalog = (state: FixMeLater) => state.catalog.search;
+export const selectCatalogSearchText = (state: FixMeLater) => state.catalog.searchText;
+export const selectCatalogSearchParam = (state: FixMeLater) => state.catalog.searchParam;
 export default catalogSlice.reducer;
 /*
 export async function effectGetCatalog(action, listenerApi) {

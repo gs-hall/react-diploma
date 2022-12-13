@@ -5,7 +5,8 @@ import { categoryAllOption } from '../../features/catalog/catalogSlice';
 
 interface getCatalogArgs {
   categoryId?: number,
-  offset?: number
+  offset?: number,
+  q?: string
 };
 
 export const shopApi = createApi({

@@ -1,15 +1,14 @@
 import React from "react";
-import { useSelector, useDispatch } from 'react-redux';
-// @ts-ignore
-import { selectSearchCatalog, setSearchCatalog, startSearchCatalog } from "../features/catalog/catalogSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCatalogSearchText, searchCatalog, setCatalogSearchText } from "../features/catalog/catalogSlice";
 
 export default function CatalogSearch() {
   const dispatch = useDispatch();
-  const search: string = useSelector(selectSearchCatalog);
+  const catalogSearch: string = useSelector(selectCatalogSearchText);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(startSearchCatalog(e.currentTarget.value));
+    dispatch(searchCatalog());
   };
 
   return (
@@ -19,8 +18,8 @@ export default function CatalogSearch() {
         name="search"
         className="form-control"
         placeholder="Поиск"
-        value={ search }
-        onChange={ (e) => dispatch(setSearchCatalog(e.target.value)) }
+        value={ catalogSearch }
+        onChange={ (e) => dispatch(setCatalogSearchText({search: e.target.value})) }
         />
     </form>
   );

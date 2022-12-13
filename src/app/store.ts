@@ -1,7 +1,10 @@
 import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
 import catalogReducer from '../features/catalog/catalogSlice';
+// @ts-ignore
 import productReducer, { actionGetProduct, effectGetProduct } from '../features/product/productSlice';
+// @ts-ignore
 import cartReducer from '../features/cart/cartSlice';
+// @ts-ignore
 import orderReducer, { actionPostOrder, effectPostOrder } from '../features/order/orderSlice';
 import { shopApi } from './services/shopApi';
 
@@ -51,3 +54,5 @@ export const store = configureStore({
     .prepend(shopApi.middleware),
   devTools: process.env.NODE_ENV !== 'production'
 });
+
+export type RootState = ReturnType<typeof store.getState>;

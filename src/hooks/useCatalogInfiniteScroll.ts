@@ -9,8 +9,8 @@ interface useInfiniteScrollProps {
 
 export default function useCatalogInfiniteScroll({offset}: useInfiniteScrollProps) {
   const dispatch = useDispatch();
-  const { activeCategoryID, data: catalogData, lastLoadedItemCount } = useSelector(selectCatalog);
-  const { data, ...rest } = useGetCatalogQuery({offset, categoryId: activeCategoryID});
+  const { activeCategoryID, data: catalogData, lastLoadedItemCount, searchParam } = useSelector(selectCatalog);
+  const { data, ...rest } = useGetCatalogQuery({offset, categoryId: activeCategoryID, q: searchParam});
 
   useEffect(() => {
     if (data) {
