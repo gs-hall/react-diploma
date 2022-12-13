@@ -1,13 +1,11 @@
 import React from "react";
 import Cart from "../components/Cart";
-import orderFactory from "../features/order/orderFactory";
+import Order from "../components/Order";
 
 export default function CartPage() {
-  const OrderWithLocalStorage = orderFactory();
-
   return (
     <Cart>
-      <OrderWithLocalStorage />
+      <Order />
     </Cart>
   );
 };

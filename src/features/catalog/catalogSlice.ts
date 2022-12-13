@@ -79,7 +79,7 @@ export const catalogSlice = createSlice({
       };
       state.searchText = action.payload.search;
     },
-    searchCatalog:  (state) => {
+    searchCatalog: (state) => {
       if (state.searchParam !== state.searchText) { // search changed
         state.data = [];
         state.searchParam = state.searchText;

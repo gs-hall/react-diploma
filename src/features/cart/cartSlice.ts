@@ -1,36 +1,17 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { FixMeLater } from '../../types/types';
+import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CartData, CartItem, CartState, deleteFromCartPayload, FixMeLater, Owner } from '../../types/types';
 
 export const localStorageCartKey = 'cart';
 
-type ProductID = number;
-type Size = string;
-
-interface Product {
-  id: ProductID;
-  count: number;
-  price: number;
-  title: string;
-  size: Size;
-};
-
-interface ProductSize {
-  [key: Size]: Product;
-};
-
-interface CartData {
-  [key: ProductID]: ProductSize;
-}
-
-interface CartState {
-  data: CartData | null
-};
-
 const initialState: CartState = {
-  data: null // data[product][size] = { id, count, price, title, size }
+  data: null, // data[product][size] = { id, count, price, title, size }
+  owner: {
+    phone: '',
+    address: '',
+  }
 };
 
-function saveDataToLocalStorage(data: CartData) {
+function saveDataToLocalStorage(data: CartState) {
   localStorage.setItem(localStorageCartKey, JSON.stringify(data));
 };
 
@@ -38,10 +19,10 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addToCart: (state, action) => {
+    addToCart: (state, action: PayloadAction<CartItem>) => {
       //console.log('addToCart', action.payload);
       const { id:productID, title, price, size, count } = action.payload;
-      if (state.data === null) {
+      if (state.data == null) {
         state.data = {};
       };
       if (!state.data.hasOwnProperty(productID)) { // add product for the 1st time
@@ -53,17 +34,15 @@ export const cartSlice = createSlice({
         state.data[productID][size] = { id: productID, title, price, size, count };
       };
       //console.log('addToCart result ', JSON.stringify(state.data));
-      saveDataToLocalStorage(state.data);
+      //saveDataToLocalStorage(state.data);
     },
 
-    setCartData: (state, action) => {
-      console.log('setCartData action.payload=', action.payload);
-      state.data = action.payload;
-      //console.log('setCartData result ', JSON.stringify(state.data));
-      //console.log('setCartData current ', current(state));
+    setCart: (_, action: PayloadAction<CartState>) => {
+      console.log('setCart action.payload=', action.payload);
+      return action.payload;
     },
 
-    deleteFromCart: (state, action) => {
+    deleteFromCart: (state, action: PayloadAction<deleteFromCartPayload>) => {
       //console.log('deleteFromCart', action.payload);
       const { id: productID, size } = action.payload;
       if (state.data) {
@@ -74,12 +53,21 @@ export const cartSlice = createSlice({
       };
       //console.log('deleteFromCart result ', JSON.stringify(state.data));
       //console.log('deleteFromCart current ', current(state.data));
-      saveDataToLocalStorage(state.data || {});
+      //saveDataToLocalStorage(state.data || {});
+    },
+
+    setOwnerData: (state, action: PayloadAction<Owner>) => {
+      console.log('setOwnerData', action.payload);
+      state.owner = action.payload;
+    },
+
+    postOrder: (state) => {
+      console.log('postOrder');
     },
   }
 });
 
-export const { addToCart, setCartData, deleteFromCart } = cartSlice.actions;
+export const { addToCart, setCart, deleteFromCart, setOwnerData, postOrder } = cartSlice.actions;
 
 export const selectCartData = (state: FixMeLater) => state.cart.data;
 
@@ -112,4 +100,13 @@ export const selectCountInCart = (state: FixMeLater) => (state.cart.data == null
 
 export const selectCartDataAsArray = (state: FixMeLater) => convertCartDataToArray(state.cart.data);
 
+export const selectOwner = (state: any) => state.cart.owner;
+
 export default cartSlice.reducer;
+
+export async function effectSaveCart(action: Action, listenerApi: any) {
+  console.log('effectSaveCart');
+  const { cart } = listenerApi.getState();
+  console.log('effectSaveCart state=', cart);
+  saveDataToLocalStorage(cart);
+};

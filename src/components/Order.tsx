@@ -1,41 +1,34 @@
 import React from "react"
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectCartDataAsArray } from "../features/cart/cartSlice";
-import { actionPostOrder } from "../features/order/orderSlice";
+import { postOrder, selectOwner, setOwnerData } from "../features/cart/cartSlice";
 
-export default function Order({ data, actions }) {
+export default function Order() {
   const dispatch = useDispatch();
-  const orderItems = useSelector(selectCartDataAsArray);
-  console.log('orderItems = ', orderItems);
+  const [agreement, setAgreement] = useState(false);
+  const owner = useSelector(selectOwner);
+  const { phone, address } = owner;
 
   const cardStyle = {
     maxWidth: "30rem",
     margin: "0 auto"
   };
 
-  const handleOrderFormChange = (e) => {
+  const handleOrderFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-    //console.log('handleOrderFormChange', name, value);
-    dispatch(actions.setData({ ...data, [name]: value }));
+    dispatch(setOwnerData({ ...owner, [name]: value }));
   };
 
-  const handleSubmitOrder = (e) => {
+  const handleSubmitOrder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const order = {
-      owner: {
-        phone: data.phone,
-        address: data.address,
-      },
-      items: orderItems
-    };
-    dispatch(actionPostOrder({ order }));
+    dispatch(postOrder());
   };
 
   return (
     <section className="order">
       <h2 className="text-center">Оформить заказ</h2>
       <div className="card" style={ cardStyle } >
-        <form className="card-body">
+        <form className="card-body" onSubmit={ handleSubmitOrder }>
           <div className="form-group">
             <label htmlFor="phone">Телефон</label>
             <input
@@ -43,7 +36,7 @@ export default function Order({ data, actions }) {
               id="phone"
               name="phone"
               placeholder="Ваш телефон"
-              value={data.phone}
+              value={phone}
               onChange={ handleOrderFormChange }
               />
           </div>
@@ -54,7 +47,7 @@ export default function Order({ data, actions }) {
               id="address"
               name="address"
               placeholder="Адрес доставки"
-              value={data.address}
+              value={address}
               onChange={ handleOrderFormChange }
               />
           </div>
@@ -64,16 +57,15 @@ export default function Order({ data, actions }) {
               className="form-check-input"
               id="agreement"
               name="agreement"
-              value={data.agreement}
-              onChange={ () => dispatch(actions.setData({ ...data, agreement: !data.agreement })) }
+              checked={agreement}
+              onChange={ () => setAgreement(prevAgreement => !prevAgreement) }
               />
             <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
           </div>
           <button
             type="submit"
             className="btn btn-outline-secondary"
-            onClick={ handleSubmitOrder }
-            disabled={ data.phone === '' || data.address === '' || !data.agreement } >Оформить</button>
+            disabled={ phone === '' || address === '' || !agreement } >Оформить</button>
         </form>
       </div>
     </section>

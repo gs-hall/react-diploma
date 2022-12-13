@@ -1,22 +1,21 @@
-import { configureStore, createListenerMiddleware } from '@reduxjs/toolkit';
+import { configureStore, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
 import catalogReducer from '../features/catalog/catalogSlice';
-// @ts-ignore
-import cartReducer from '../features/cart/cartSlice.ts';
-// @ts-ignore
-import orderReducer, { actionPostOrder, effectPostOrder } from '../features/order/orderSlice';
+import cartReducer, { addToCart, deleteFromCart, effectSaveCart, postOrder } from '../features/cart/cartSlice';
+//import orderReducer from '../features/order/orderSlice';
 import { shopApi } from './services/shopApi';
 
-const listenerMiddleware = createListenerMiddleware()
+const listenerMiddleware = createListenerMiddleware();
+
 listenerMiddleware.startListening({
-  actionCreator: actionPostOrder,
-  effect: effectPostOrder
+  //actionCreator: addToCart,
+  matcher: isAnyOf(addToCart, deleteFromCart, postOrder),
+  effect: effectSaveCart
 });
 
 export const store = configureStore({
   reducer: {
     catalog: catalogReducer,
     cart: cartReducer,
-    order: orderReducer,
     [shopApi.reducerPath]: shopApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
@@ -26,4 +25,4 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production'
 });
 
-export type RootState = ReturnType<typeof store.getState>;
+//export type RootState = ReturnType<typeof store.getState>;
