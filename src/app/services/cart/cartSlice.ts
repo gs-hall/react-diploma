@@ -14,28 +14,27 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      //console.log('addToCart', action.payload);
       const { id:productID, title, price, size, count } = action.payload;
       if (state.data == null) {
         state.data = {};
       };
-      if (!state.data.hasOwnProperty(productID)) { // add product for the 1st time
+      if (!state.data?.hasOwnProperty(productID)) { // add product for the 1st time
         state.data[productID] = {};
       };
-      if (state.data[productID].hasOwnProperty(size)) { // increase count
+      if (state.data[productID].hasOwnProperty(size) && state.data[productID][size]?.count != null) {
+        // increase count
         state.data[productID][size].count += count;
-      } else { // add product size
+      } else {
+        // add product size
         state.data[productID][size] = { id: productID, title, price, size, count };
       };
     },
 
     setCart: (_, action: PayloadAction<CartState>) => {
-      console.log('setCart action.payload=', action.payload);
       return action.payload;
     },
 
     deleteFromCart: (state, action: PayloadAction<DeleteFromCartPayload>) => {
-      //console.log('deleteFromCart', action.payload);
       const { id: productID, size } = action.payload;
       if (state.data) {
         delete state.data[productID][size];
@@ -43,9 +42,6 @@ export const cartSlice = createSlice({
           delete state.data[productID];
         };
       };
-      //console.log('deleteFromCart result ', JSON.stringify(state.data));
-      //console.log('deleteFromCart current ', current(state.data));
-      //saveDataToLocalStorage(state.data || {});
     },
 
     setOwnerData: (state, action: PayloadAction<Owner>) => {
@@ -66,9 +62,9 @@ const convertCartDataToArray = (data: CartData) => { // convert to array
   if (data == null) return null;
   if (Object.keys(data).length === 0) return [];
 
-  return Object.keys(data)?.flatMap((productID) => {
+  return Object.keys(data).flatMap((productID) => {
     console.log(' productID = ', productID, typeof productID);
-    return Object.keys(data[Number(productID)])?.map(size => (
+    return Object.keys(data[Number(productID)]).map(size => (
       data[Number(productID)][size]
     ))});
 };
@@ -83,5 +79,4 @@ export const selectOwner = (state: any) => state.cart.owner;
 
 export default cartSlice.reducer;
 
-//export const { addToCart, setCart, deleteFromCart, setOwnerData, postOrder } = cartSlice.actions;
 export const cartActions = cartSlice.actions;
