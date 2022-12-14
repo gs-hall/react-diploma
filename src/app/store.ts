@@ -1,17 +1,25 @@
-import { configureStore, createListenerMiddleware, isAnyOf } from '@reduxjs/toolkit';
-import catalogReducer from '../features/catalog/catalogSlice';
-import cartReducer, { addToCart, deleteFromCart, effectSaveCart, postOrder } from '../features/cart/cartSlice';
-//import orderReducer from '../features/order/orderSlice';
+import { configureStore, createListenerMiddleware, ListenerEffectAPI, TypedStartListening } from '@reduxjs/toolkit';
+import catalogReducer from './services/catalog/catalogSlice';
+import cartReducer from './services/cart/cartSlice';
 import { shopApi } from './services/shopApi';
 
 const listenerMiddleware = createListenerMiddleware();
-
+/*
 listenerMiddleware.startListening({
   //actionCreator: addToCart,
   matcher: isAnyOf(addToCart, deleteFromCart, postOrder),
-  effect: effectSaveCart
+  effect: saveCartToLocalStorage
 });
 
+listenerMiddleware.startListening({
+  actionCreator: addToCart,
+  effect: (action, listenerApi) => {
+    console.log('startListening');
+    console.log('action type = ', typeof action);
+    console.log('listenerApi type = ', typeof listenerApi);
+  }
+});
+*/
 export const store = configureStore({
   reducer: {
     catalog: catalogReducer,
@@ -25,4 +33,8 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== 'production'
 });
 
-//export type RootState = ReturnType<typeof store.getState>;
+type RootState = ReturnType<typeof store.getState>;
+type AppDispatch = typeof store.dispatch;
+export type AppListenerEffectAPI = ListenerEffectAPI<RootState, AppDispatch>;
+export type AppStartListening = TypedStartListening<RootState, AppDispatch>;
+export const startAppListening = listenerMiddleware.startListening as AppStartListening;

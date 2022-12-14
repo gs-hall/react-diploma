@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PageNotFound from './pages/NotFoundPage';
 import About from './pages/AboutPage';
@@ -13,9 +13,21 @@ import MainContainer from './components/MainContainer';
 import "./css/font-awesome.min.css";
 import "./css/bootstrap.min.css";
 import "./css/style.css";
+import { Unsubscribe } from '@reduxjs/toolkit';
+import { startAppListening } from './app/store';
+import { setupCartListeners } from './app/services/cart/cartListeners';
 
 
 function App() {
+  // setup listeners
+  useEffect(() => {
+    const subscriptions: Unsubscribe[] = [
+      setupCartListeners(startAppListening),
+    ]
+
+    return () => subscriptions.forEach((unsubscribe) => unsubscribe())
+  }, []);
+
   return (
     <BrowserRouter>
       <Header />

@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setCart, localStorageCartKey, selectCartDataAsArray } from '../features/cart/cartSlice';
+import { localStorageCartKey } from '../app/services/cart/cartListeners';
+import { cartActions, selectCartDataAsArray } from '../app/services/cart/cartSlice';
 
 export default function useGetCart() {
   const data = useSelector(selectCartDataAsArray);
@@ -13,7 +14,7 @@ export default function useGetCart() {
         const dataFromLocalStorage = JSON.parse(json);
         console.log('useGetCart loaded data from LS =', dataFromLocalStorage);
         if (dataFromLocalStorage) {
-          dispatch(setCart(dataFromLocalStorage));
+          dispatch(cartActions.setCart(dataFromLocalStorage));
         };
       };
     };

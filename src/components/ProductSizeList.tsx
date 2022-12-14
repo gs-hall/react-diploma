@@ -1,8 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
-// @ts-ignore
-import { addToCart } from "../features/cart/cartSlice.ts";
+import { cartActions } from "../app/services/cart/cartSlice";
 import { ProductItem as ProductItemType } from "../types/types";
 
 interface ProductSizeListProps {
@@ -17,7 +16,9 @@ export default function ProductSizeList({ product }: ProductSizeListProps) {
   const handleAddToCart = () => {
     //console.log('handleAddToCart', size, count);
     const { id, title, price } = product;
-    dispatch(addToCart({ id, title, price, size, count }));
+    if (size) {
+      dispatch(cartActions.addToCart({ id, title, price, size, count }));
+    };
   };
 
   const handleChangeCount = (newCount: number) => {

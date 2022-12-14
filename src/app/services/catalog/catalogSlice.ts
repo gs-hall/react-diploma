@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { CatalogItems, CatalogStateProps, CategoryItem, FixMeLater, IncreaseCatalogOffsetPayload,
-  SearchCatalogPayload, SetActiveCategoryPayload, SetCatalogDataPayload } from '../../types/types';
+  SearchCatalogPayload, SetActiveCategoryPayload, SetCatalogDataPayload } from '../../../types/types';
 
 const mergeData = (a: CatalogItems, b: CatalogItems) => {
   const ids = new Set(a.map(x => x.id));

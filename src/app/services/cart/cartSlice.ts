@@ -1,7 +1,5 @@
-import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartData, CartItem, CartState, DeleteFromCartPayload, FixMeLater, Owner } from '../../types/types';
-
-export const localStorageCartKey = 'cart';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CartData, CartItem, CartState, DeleteFromCartPayload, FixMeLater, Owner } from '../../../types/types';
 
 const initialState: CartState = {
   data: null, // data[product][size] = { id, count, price, title, size }
@@ -9,10 +7,6 @@ const initialState: CartState = {
     phone: '',
     address: '',
   }
-};
-
-function saveDataToLocalStorage(data: CartState) {
-  localStorage.setItem(localStorageCartKey, JSON.stringify(data));
 };
 
 export const cartSlice = createSlice({
@@ -33,8 +27,6 @@ export const cartSlice = createSlice({
       } else { // add product size
         state.data[productID][size] = { id: productID, title, price, size, count };
       };
-      //console.log('addToCart result ', JSON.stringify(state.data));
-      //saveDataToLocalStorage(state.data);
     },
 
     setCart: (_, action: PayloadAction<CartState>) => {
@@ -67,20 +59,7 @@ export const cartSlice = createSlice({
   }
 });
 
-export const { addToCart, setCart, deleteFromCart, setOwnerData, postOrder } = cartSlice.actions;
-
 export const selectCartData = (state: FixMeLater) => state.cart.data;
-
-/*/
-export const getCartAsArray = (data: CartData) => { // convert to array
-  if (data == null || Object.keys(data).length === 0) return null;
-  console.log('getCartAsArray data = ', data);
-  return Object.keys(data)?.flatMap((productID) => (
-    Object.keys(data[Number(productID)])?.map(size => (
-      data[Number(productID)][size]
-    ))));
-};
-*/
 
 const convertCartDataToArray = (data: CartData) => { // convert to array
   console.log('convertCartDataToArray data = ', data);
@@ -104,9 +83,5 @@ export const selectOwner = (state: any) => state.cart.owner;
 
 export default cartSlice.reducer;
 
-export async function effectSaveCart(action: Action, listenerApi: any) {
-  console.log('effectSaveCart');
-  const { cart } = listenerApi.getState();
-  console.log('effectSaveCart state=', cart);
-  saveDataToLocalStorage(cart);
-};
+//export const { addToCart, setCart, deleteFromCart, setOwnerData, postOrder } = cartSlice.actions;
+export const cartActions = cartSlice.actions;

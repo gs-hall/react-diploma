@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCatalogSearchText, searchCatalog, setCatalogSearchText } from "../features/catalog/catalogSlice";
+import { selectCatalogSearchText, searchCatalog, setCatalogSearchText } from "../app/services/catalog/catalogSlice";
 
 export default function CatalogSearch() {
   const dispatch = useDispatch();

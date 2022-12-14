@@ -1,7 +1,7 @@
 import React from "react"
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { postOrder, selectOwner, setOwnerData } from "../features/cart/cartSlice";
+import { cartActions, selectOwner } from "../app/services/cart/cartSlice";
 
 export default function Order() {
   const dispatch = useDispatch();
@@ -16,12 +16,12 @@ export default function Order() {
 
   const handleOrderFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-    dispatch(setOwnerData({ ...owner, [name]: value }));
+    dispatch(cartActions.setOwnerData({ ...owner, [name]: value }));
   };
 
   const handleSubmitOrder = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(postOrder());
+    dispatch(cartActions.postOrder());
   };
 
   return (

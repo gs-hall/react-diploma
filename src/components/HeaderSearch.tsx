@@ -2,7 +2,7 @@ import classNames from "classnames";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from "react-router-dom";
-import { searchCatalog, selectCatalogSearchText, setCatalogSearchText } from "../features/catalog/catalogSlice";
+import { searchCatalog, selectCatalogSearchText, setCatalogSearchText } from "../app/services/catalog/catalogSlice";
 
 const catalogLink = '/catalog';
 

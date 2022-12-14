@@ -1,7 +1,7 @@
 import React from "react"
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCategoryListQuery } from "../app/services/shopApi";
-import { selectActiveCategoryID, setActiveCategory } from "../features/catalog/catalogSlice";
+import { selectActiveCategoryID, setActiveCategory } from "../app/services/catalog/catalogSlice";
 //import { actionSetActiveCategory, selectActiveCategoryID } from "../features/category/categorySlice";
 import CategoryItem from "./CategoryItem";
 import Error from "./Error";

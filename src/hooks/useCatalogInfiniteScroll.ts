@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useGetCatalogQuery } from "../app/services/shopApi";
-import { addCatalogData, selectCatalog, setCatalogData } from "../features/catalog/catalogSlice";
+import { addCatalogData, selectCatalog, setCatalogData } from "../app/services/catalog/catalogSlice";
 
 interface useInfiniteScrollProps {
   offset: number

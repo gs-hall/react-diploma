@@ -5,7 +5,7 @@ import Loader from "./Loader";
 import LoadMore from "./LoadMore";
 import { CatalogItem as CatalogItemType } from "../types/types";
 import useCatalogInfiniteScroll from "../hooks/useCatalogInfiniteScroll";
-import { increaseCatalogOffset, selectCatalogOffset } from "../features/catalog/catalogSlice";
+import { increaseCatalogOffset, selectCatalogOffset } from "../app/services/catalog/catalogSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 interface CatalogProps {

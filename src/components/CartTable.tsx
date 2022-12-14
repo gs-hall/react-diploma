@@ -2,7 +2,7 @@ import React from "react";
 import { useDispatch } from "react-redux";
 import CartTableItem from "./CartTableItem";
 import { numberWithSpaces, calcDotProduct } from "../utils/utils";
-import { deleteFromCart } from "../features/cart/cartSlice";
+import { cartActions } from "../app/services/cart/cartSlice";
 import { CartItems } from "../types/types";
 
 interface CartTableProps {
@@ -32,7 +32,7 @@ export default function CartTable({ items }: CartTableProps) {
             key={ item.id + item.size }
             item={ item }
             index={ index+1 }
-            onDelete={ () => dispatch(deleteFromCart({ id: item.id, size: item.size })) }
+            onDelete={ () => dispatch(cartActions.deleteFromCart({ id: item.id, size: item.size })) }
             />
         )}
         <tr>

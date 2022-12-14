@@ -1,6 +1,6 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { TopSalesItem, CategoryItem, CatalogItems, ProductItem, GetCatalogArgs, Order } from "../../types/types";
-import { categoryAllOption } from '../../features/catalog/catalogSlice';
+import { categoryAllOption } from './catalog/catalogSlice';
 
 export const shopApi = createApi({
   reducerPath: 'shopApi',
