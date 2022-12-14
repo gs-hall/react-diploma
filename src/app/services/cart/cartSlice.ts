@@ -53,7 +53,7 @@ export const cartSlice = createSlice({
       state.owner = action.payload;
     },
 
-    postOrder: (state) => {
+    postOrder: () => {
       console.log('postOrder');
     },
   }

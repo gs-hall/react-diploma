@@ -1,7 +1,7 @@
-import React, { MouseEventHandler } from "react";
+import React from "react";
 
 interface LoadMoreProps {
-  onClick: MouseEventHandler
+  onClick: React.MouseEventHandler
 };
 
 export default function LoadMore({ onClick }: LoadMoreProps) {

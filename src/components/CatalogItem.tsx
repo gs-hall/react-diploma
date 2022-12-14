@@ -1,6 +1,5 @@
 // Represents an element in catalog list
 
-import React from "react";
 import { Link } from "react-router-dom";
 import { CatalogItem as CatalogItemType } from "../types/types";
 

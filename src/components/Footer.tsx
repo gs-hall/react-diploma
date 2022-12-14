@@ -1,5 +1,4 @@
 import classnames from "classnames";
-import React from "react"
 import { NavLink } from "react-router-dom";
 
 export default function Footer() {
@@ -9,7 +8,7 @@ export default function Footer() {
     {link:"/contacts", name:"Контакты"}
   ];
   const year = new Date().getFullYear();
-  
+
   return (
     <footer className="container bg-light footer">
       <div className="row">

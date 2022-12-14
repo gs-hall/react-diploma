@@ -1,5 +1,4 @@
-import React from "react"
-import { useState } from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { cartActions, selectOwner } from "../app/services/cart/cartSlice";
 

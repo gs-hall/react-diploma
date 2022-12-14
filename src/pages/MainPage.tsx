@@ -1,4 +1,3 @@
-import React from "react"
 import Banner from "../components/Banner";
 import CategoryList from "../components/CategoryList";
 import Catalog from "../components/Catalog";

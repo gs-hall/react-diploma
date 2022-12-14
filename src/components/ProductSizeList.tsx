@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useDispatch } from 'react-redux';
 import { cartActions } from "../app/services/cart/cartSlice";
 import { ProductItem as ProductItemType } from "../types/types";

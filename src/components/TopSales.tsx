@@ -1,4 +1,3 @@
-import React from "react";
 import TopSalesItem from "./TopSalesItem";
 import { useGetTopSalesQuery } from "../app/services/shopApi";
 import Loader from "./Loader";

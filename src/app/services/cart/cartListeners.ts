@@ -4,7 +4,7 @@ import { cartActions } from "./cartSlice";
 
 export const localStorageCartKey = 'cart';
 
-export async function saveCartToLocalStorage(action: AnyAction, listenerApi: AppListenerEffectAPI) {
+export async function saveCartToLocalStorage(_: AnyAction, listenerApi: AppListenerEffectAPI) {
   console.log('effectSaveCart listenerApi type = ', typeof listenerApi);
   const { cart } = listenerApi.getState();
   console.log('effectSaveCart state=', cart);

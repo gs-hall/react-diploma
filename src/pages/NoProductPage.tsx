@@ -1,4 +1,3 @@
-import React from "react";
 import Error from "../components/Error";
 import Header from "../components/Header";
 

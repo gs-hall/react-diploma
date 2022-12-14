@@ -1,4 +1,3 @@
-import React from "react";
 import { useDispatch } from "react-redux";
 import CartTableItem from "./CartTableItem";
 import { numberWithSpaces, calcDotProduct } from "../utils/utils";

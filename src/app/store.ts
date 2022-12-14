@@ -4,22 +4,7 @@ import cartReducer from './services/cart/cartSlice';
 import { shopApi } from './services/shopApi';
 
 const listenerMiddleware = createListenerMiddleware();
-/*
-listenerMiddleware.startListening({
-  //actionCreator: addToCart,
-  matcher: isAnyOf(addToCart, deleteFromCart, postOrder),
-  effect: saveCartToLocalStorage
-});
 
-listenerMiddleware.startListening({
-  actionCreator: addToCart,
-  effect: (action, listenerApi) => {
-    console.log('startListening');
-    console.log('action type = ', typeof action);
-    console.log('listenerApi type = ', typeof listenerApi);
-  }
-});
-*/
 export const store = configureStore({
   reducer: {
     catalog: catalogReducer,

@@ -1,6 +1,5 @@
 // Represents a detailed product (aka 'catalog item') description (for product page)
 
-import React from "react";
 import { useGetProductQuery } from "../app/services/shopApi";
 import Error from "./Error";
 import Loader from "./Loader";

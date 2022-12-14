@@ -10,7 +10,7 @@ export const shopApi = createApi({
       query: () => 'top-sales',
     }),
     getCategoryList: build.query<CategoryItem[], void>({
-      query: (args) => 'categories',
+      query: () => 'categories',
       transformResponse: (response: CategoryItem[]) => [categoryAllOption].concat(response),
     }),
     getCatalog: build.query<CatalogItems, GetCatalogArgs>({

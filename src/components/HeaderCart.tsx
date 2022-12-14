@@ -1,9 +1,5 @@
-import React from "react";
-//import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-//import { selectCountInCart } from "../features/cart/cartSlice";
 import useGetCartCount from "../hooks/useGetCartCount";
-//import useGetCartFromLocalStorage from "../hooks/useGetCartFromLocalStorage";
 
 export default function HeaderCart() {
   const productCount: number = useGetCartCount() || 0;
