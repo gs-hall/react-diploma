@@ -3,10 +3,10 @@ import React, { useState } from "react";
 import { useDispatch } from 'react-redux';
 // @ts-ignore
 import { addToCart } from "../features/cart/cartSlice.ts";
-import { productItem } from "../types/types";
+import { ProductItem as ProductItemType } from "../types/types";
 
 interface ProductSizeListProps {
-  product: productItem
+  product: ProductItemType
 };
 
 export default function ProductSizeList({ product }: ProductSizeListProps) {

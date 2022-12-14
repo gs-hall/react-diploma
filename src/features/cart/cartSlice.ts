@@ -1,5 +1,5 @@
 import { Action, createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartData, CartItem, CartState, deleteFromCartPayload, FixMeLater, Owner } from '../../types/types';
+import { CartData, CartItem, CartState, DeleteFromCartPayload, FixMeLater, Owner } from '../../types/types';
 
 export const localStorageCartKey = 'cart';
 
@@ -42,7 +42,7 @@ export const cartSlice = createSlice({
       return action.payload;
     },
 
-    deleteFromCart: (state, action: PayloadAction<deleteFromCartPayload>) => {
+    deleteFromCart: (state, action: PayloadAction<DeleteFromCartPayload>) => {
       //console.log('deleteFromCart', action.payload);
       const { id: productID, size } = action.payload;
       if (state.data) {

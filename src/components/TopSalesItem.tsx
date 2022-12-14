@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { catalogItem } from "../types/types";
+import { CatalogItem as CatalogItemType } from "../types/types";
 
 interface TopSalesItemProps {
-  item: catalogItem
+  item: CatalogItemType
 };
 
 export default function TopSalesItem({ item }: TopSalesItemProps) {

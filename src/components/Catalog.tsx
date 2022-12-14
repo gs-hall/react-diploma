@@ -3,7 +3,7 @@ import CatalogItem from "./CatalogItem";
 import Error from "./Error";
 import Loader from "./Loader";
 import LoadMore from "./LoadMore";
-import { catalogItem } from "../types/types";
+import { CatalogItem as CatalogItemType } from "../types/types";
 import useCatalogInfiniteScroll from "../hooks/useCatalogInfiniteScroll";
 import { increaseCatalogOffset, selectCatalogOffset } from "../features/catalog/catalogSlice";
 import { useDispatch, useSelector } from "react-redux";
@@ -26,7 +26,7 @@ export default function Catalog({ children }: CatalogProps) {
     { data &&
       <>
         <div className="row">
-          { data?.map((item:catalogItem) => <CatalogItem item={item} key={item.id} />) }
+          { data?.map((item:CatalogItemType) => <CatalogItem item={item} key={item.id} />) }
         </div>
         { !isFetching && loadMoreCount && loadMoreCount === lastLoadedItemCount && <LoadMore onClick={() => dispatch(increaseCatalogOffset({loadMoreCount}))} /> }
         <Loader isLoading={isFetching} />

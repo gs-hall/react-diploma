@@ -1,31 +1,31 @@
-export interface topSalesItem {
+export interface TopSalesItem {
   id: number;
   title: string;
   price: number;
   images: string[];
 };
 
-export interface categoryItem {
+export interface CategoryItem {
   id: number;
   title: string;
 };
 
-export interface catalogItem {
+export interface CatalogItem {
   id: number;
   title: string;
   price: number;
   images: string[];
 };
-export type catalogItems = catalogItem[];
+export type CatalogItems = CatalogItem[];
 
-export interface sizeItem {
+export interface SizeItem {
   size: string,
   available: boolean
 };
 
-export type sizeItems = sizeItem[];
+export type SizeItems = SizeItem[];
 
-export interface productItem {
+export interface ProductItem {
   id: number;
   title: string;
   images: string[];
@@ -36,7 +36,7 @@ export interface productItem {
   season: string;
   reason: string;
   price: number;
-  sizes: sizeItems;
+  sizes: SizeItems;
 };
 
 export interface CartItem {
@@ -51,6 +51,11 @@ export type CartItems = CartItem[];
 export interface Owner {
   phone: string;
   address: string;
+};
+
+export interface Order {
+  owner: Owner;
+  items: CartItems;
 };
 
 export type ProductID = number;
@@ -77,9 +82,40 @@ export interface CartState {
   owner: Owner
 };
 
-export interface deleteFromCartPayload {
+export interface DeleteFromCartPayload {
   id: ProductID,
   size: Size
+};
+
+export interface GetCatalogArgs {
+  categoryId?: number,
+  offset?: number,
+  q?: string
+};
+
+export interface CatalogStateProps {
+  data: CatalogItems | null,
+  offset: number,
+  activeCategoryID: number,
+  searchText: string,
+  searchParam: string,
+  lastLoadedItemCount: number | null
+};
+
+export interface SetActiveCategoryPayload {
+  activeCategoryID: number
+};
+
+export interface SetCatalogDataPayload {
+  data: CatalogItems
+};
+
+export interface IncreaseCatalogOffsetPayload {
+  loadMoreCount: number
+};
+
+export interface SearchCatalogPayload {
+  search: string
 };
 
 export type FixMeLater = any;

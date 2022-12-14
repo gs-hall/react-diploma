@@ -1,43 +1,19 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { catalogItems, categoryItem, FixMeLater } from '../../types/types';
+import { CatalogItems, CatalogStateProps, CategoryItem, FixMeLater, IncreaseCatalogOffsetPayload,
+  SearchCatalogPayload, SetActiveCategoryPayload, SetCatalogDataPayload } from '../../types/types';
 
-interface catalogStateProps {
-  data: catalogItems | null,
-  offset: number,
-  activeCategoryID: number,
-  searchText: string,
-  searchParam: string,
-  lastLoadedItemCount: number | null
-};
-
-interface setActiveCategoryPayload {
-  activeCategoryID: number
-};
-
-interface setCatalogDataPayload {
-  data: catalogItems
-};
-
-interface increaseCatalogOffsetPayload {
-  loadMoreCount: number
-};
-
-interface searchCatalogPayload {
-  search: string
-};
-
-const mergeData = (a: catalogItems, b: catalogItems) => {
+const mergeData = (a: CatalogItems, b: CatalogItems) => {
   const ids = new Set(a.map(x => x.id));
   const n = b.filter(x => !ids.has(x.id));
   return a.concat(n);
 };
 
-export const categoryAllOption: categoryItem = {
+export const categoryAllOption: CategoryItem = {
   id: 0,
   title: "Все"
 };
 
-const initialState: catalogStateProps = {
+const initialState: CatalogStateProps = {
   data: null,
   offset: 0,
   lastLoadedItemCount: null,
@@ -50,27 +26,27 @@ export const catalogSlice = createSlice({
   name: 'catalog',
   initialState,
   reducers: {
-    setActiveCategory: (state, action: PayloadAction<setActiveCategoryPayload>) => {
+    setActiveCategory: (state, action: PayloadAction<SetActiveCategoryPayload>) => {
       console.log('actionSetActiveCategory', action.payload);
       state.activeCategoryID = action.payload.activeCategoryID;
       state.data = [];
       state.offset = 0;
     },
-    setCatalogData: (state, action: PayloadAction<setCatalogDataPayload>) => {
+    setCatalogData: (state, action: PayloadAction<SetCatalogDataPayload>) => {
       console.log('setCatalogData', action.payload);
       state.data = action.payload.data;
       state.lastLoadedItemCount = action.payload.data?.length;
     },
-    addCatalogData: (state, action: PayloadAction<setCatalogDataPayload>) => {
+    addCatalogData: (state, action: PayloadAction<SetCatalogDataPayload>) => {
       console.log('setCatalogData', action.payload);
       state.data = mergeData(state.data || [], action.payload.data);
       state.lastLoadedItemCount = action.payload.data?.length;
     },
-    increaseCatalogOffset: (state, action: PayloadAction<increaseCatalogOffsetPayload>) => {
+    increaseCatalogOffset: (state, action: PayloadAction<IncreaseCatalogOffsetPayload>) => {
       console.log('increaseCatalogOffset', action.payload);
       state.offset += action.payload.loadMoreCount;
     },
-    setCatalogSearchText:  (state, action: PayloadAction<searchCatalogPayload>) => {
+    setCatalogSearchText:  (state, action: PayloadAction<SearchCatalogPayload>) => {
       //console.log('setSearchCatalog', action.payload);
       if (state.searchText !== '' && action.payload.search ==='') { // cleared search
         state.data = [];
