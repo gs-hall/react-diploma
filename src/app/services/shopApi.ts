@@ -7,22 +7,26 @@ export const shopApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: process.env.REACT_APP_BASE_URL }),
   endpoints: (build) => ({
     getTopSales: build.query<TopSalesItem[], void>({
-      query: () => 'top-sales',
+      query: () => '/top-sales',
     }),
     getCategoryList: build.query<CategoryItem[], void>({
-      query: () => 'categories',
+      query: () => '/categories',
       transformResponse: (response: CategoryItem[]) => [categoryAllOption].concat(response),
     }),
     getCatalog: build.query<CatalogItems, GetCatalogArgs>({
-      query: (args) => ({url: 'items', params: args}),
+      query: (args) => ({url: '/items', params: args}),
     }),
     getProduct: build.query<ProductItem, number>({
-      query: (id) => ({url: `items/${id}`}),
+      query: (id) => ({url: `/items/${id}`}),
     }),
-    postOrder: build.query<Order, void>({
-      query: (id) => ({url: `items/${id}`}),
+    postOrder: build.mutation<void, Order>({
+      query: (order) => ({
+        url: '/order',
+        method: 'POST',
+        body: JSON.stringify(order)
+      })
     }),
   }),
 })
 
-export const { useGetTopSalesQuery, useGetCategoryListQuery, useGetCatalogQuery, useGetProductQuery } = shopApi;
+export const { useGetTopSalesQuery, useGetCategoryListQuery, useGetCatalogQuery, useGetProductQuery, usePostOrderMutation } = shopApi;

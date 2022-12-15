@@ -12,7 +12,7 @@ export default function useGetCart() {
       const json = localStorage.getItem(localStorageCartKey);
       if (json) {
         const dataFromLocalStorage = JSON.parse(json);
-        console.log('useGetCart loaded data from LS =', dataFromLocalStorage);
+        //console.log('useGetCart loaded data from LS =', dataFromLocalStorage);
         if (dataFromLocalStorage) {
           dispatch(cartActions.setCart(dataFromLocalStorage));
         };

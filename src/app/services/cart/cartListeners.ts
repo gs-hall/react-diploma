@@ -5,10 +5,12 @@ import { cartActions } from "./cartSlice";
 export const localStorageCartKey = 'cart';
 
 export async function saveCartToLocalStorage(_: AnyAction, listenerApi: AppListenerEffectAPI) {
-  console.log('effectSaveCart listenerApi type = ', typeof listenerApi);
   const { cart } = listenerApi.getState();
-  console.log('effectSaveCart state=', cart);
   localStorage.setItem(localStorageCartKey, JSON.stringify(cart));
+};
+
+export async function orderPosted(_: AnyAction, listenerApi: AppListenerEffectAPI) {
+  console.log('orderPosted listener', listenerApi);
 };
 
 export function setupCartListeners(
@@ -16,8 +18,12 @@ export function setupCartListeners(
 ): Unsubscribe {
   const subscriptions = [
     startListening({
-      matcher: isAnyOf(cartActions.addToCart, cartActions.deleteFromCart, cartActions.postOrder),
+      matcher: isAnyOf(cartActions.addToCart, cartActions.deleteFromCart, cartActions.orderPosted),
       effect: saveCartToLocalStorage
+    }),
+    startListening({
+      actionCreator: cartActions.orderPosted,
+      effect: orderPosted
     })
   ];
 

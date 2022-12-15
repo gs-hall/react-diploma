@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { CartData, CartItem, CartState, DeleteFromCartPayload, FixMeLater, Owner } from '../../../types/types';
+import { CartData, CartItem, CartItems, CartState, DeleteFromCartPayload, FixMeLater, Order, Owner } from '../../../types/types';
 
 const initialState: CartState = {
   data: null, // data[product][size] = { id, count, price, title, size }
@@ -45,37 +45,44 @@ export const cartSlice = createSlice({
     },
 
     setOwnerData: (state, action: PayloadAction<Owner>) => {
-      console.log('setOwnerData', action.payload);
+      //console.log('setOwnerData', action.payload);
       state.owner = action.payload;
     },
 
-    postOrder: () => {
-      console.log('postOrder');
+    orderPosted: (state) => {
+      console.log('orderPosted action');
+      state.data = null;
     },
   }
 });
 
 export const selectCartData = (state: FixMeLater) => state.cart.data;
 
-const convertCartDataToArray = (data: CartData) => { // convert to array
-  console.log('convertCartDataToArray data = ', data);
+// convert to array
+export const convertCartDataToArray = (data: CartData): CartItems => {
+  //console.log('convertCartDataToArray data = ', data);
   if (data == null) return null;
   if (Object.keys(data).length === 0) return [];
 
-  return Object.keys(data).flatMap((productID) => {
-    console.log(' productID = ', productID, typeof productID);
-    return Object.keys(data[Number(productID)]).map(size => (
+  return Object.keys(data).flatMap((productID) => (
+    //console.log(' productID = ', productID, typeof productID);
+    Object.keys(data[Number(productID)]).map(size => (
       data[Number(productID)][size]
-    ))});
+    ))));
 };
 
 export const selectCountInCart = (state: FixMeLater) => (state.cart.data == null ? null
   : Object.keys(state.cart.data).length === 0 ? 0
   : Object.keys(state.cart.data).reduce( (sum, product) => (sum + Object.keys(state.cart.data[product]).length), 0 ));
 
-export const selectCartDataAsArray = (state: FixMeLater) => convertCartDataToArray(state.cart.data);
+export const selectCartDataAsArray = (state: FixMeLater):CartItems => convertCartDataToArray(state.cart.data);
 
 export const selectOwner = (state: any) => state.cart.owner;
+
+export const selectOrder = (state: any):Order => ({
+  owner: state.cart.owner,
+  items: convertCartDataToArray(state.cart.data)
+});
 
 export default cartSlice.reducer;
 

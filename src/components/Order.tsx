@@ -1,12 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { cartActions, selectOwner } from "../app/services/cart/cartSlice";
+import { useNavigate } from "react-router-dom";
+import { cartActions, selectOrder, selectOwner } from "../app/services/cart/cartSlice";
+import { usePostOrderMutation } from "../app/services/shopApi";
+import { Order as OrderType } from "../types/types";
+import Error from "./Error";
+import Loader from "./Loader";
 
 export default function Order() {
   const dispatch = useDispatch();
   const [agreement, setAgreement] = useState(false);
   const owner = useSelector(selectOwner);
   const { phone, address } = owner;
+  const [ postOrder, { isLoading, isError, isSuccess } ] = usePostOrderMutation();
+  const order: OrderType = useSelector(selectOrder);
+  const navigate = useNavigate();
 
   const cardStyle = {
     maxWidth: "30rem",
@@ -18,10 +26,26 @@ export default function Order() {
     dispatch(cartActions.setOwnerData({ ...owner, [name]: value }));
   };
 
-  const handleSubmitOrder = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmitOrder = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(cartActions.postOrder());
+    try {
+      console.log('postOrder');
+      await postOrder(order).unwrap();
+      dispatch(cartActions.orderPosted());
+    } catch {
+      console.log('postOrder error');
+    };
   };
+
+  if (isSuccess) {
+    return (
+      <section className="order">
+        <h2 className="text-center">Заказ успешно размещен</h2>
+        <div className="card" style={ cardStyle } >
+          <button onClick={ () => navigate("/") } className="btn btn-outline-primary btn-center">Продолжить покупки</button>
+        </div>
+      </section>
+  )};
 
   return (
     <section className="order">
@@ -61,10 +85,18 @@ export default function Order() {
               />
             <label className="form-check-label" htmlFor="agreement">Согласен с правилами доставки</label>
           </div>
+          <Loader isLoading={isLoading} />
+          { !isLoading && !isSuccess &&
           <button
             type="submit"
             className="btn btn-outline-secondary"
-            disabled={ phone === '' || address === '' || !agreement } >Оформить</button>
+            disabled={ phone === '' || address === '' || !agreement } >
+              Оформить
+          </button>
+          }
+          { isError &&
+            <Error message="Ошибка при оформлении заказа. Пожалуйста, попробуйте еще раз позже" />
+          }
         </form>
       </div>
     </section>

@@ -18,6 +18,7 @@ export default function Cart({ children }: CartProps) {
         <br/><br/>
         <h5 className="text-center">Корзина пуста, Вы можете найти подходящие товары в <Link to="/catalog">каталоге</Link></h5>
         <br/><br/>
+        { children }
       </>
     );
   };

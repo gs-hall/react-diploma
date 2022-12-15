@@ -46,7 +46,7 @@ export interface CartItem {
   price: number;
   count: number;
 };
-export type CartItems = CartItem[];
+export type CartItems = CartItem[] | null;
 
 export interface Owner {
   phone: string;
