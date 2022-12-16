@@ -13,13 +13,13 @@ export default function CatalogItem({ item }: CatalogItemProps) {
       <div className="card catalog-item-card">
         <img
           src={item.images[0]}
-          className="card-img-top img-fluid"
+          className="card-img-top img-fluid img-fix"
           alt={item.title}
           />
         <div className="card-body">
-          <p className="card-text">{item.title}</p>
-          <p className="card-text">{item.price} руб.</p>
-          <Link to={`/products/${item.id}`} className="btn btn-outline-primary">Заказать</Link>
+          <p className="card-text title-fix">{item.title}</p>
+          <p className="card-text price-fix">{item.price} руб.</p>
+          <Link to={`/products/${item.id}`} className="btn btn-outline-primary btn-fix">Заказать</Link>
         </div>
       </div>
     </div>

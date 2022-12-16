@@ -177,7 +177,8 @@ section {
 }
 
 .catalog-item-card {
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  min-height: 400px;
 }
 
 .catalog-item-size {
@@ -311,4 +312,24 @@ h2, .h2 {
 .btn-outline-primary:hover {
   background-color: #727e86;
   border-color: #727e86;
+}
+
+.btn-fix {
+  position: absolute;
+  bottom: 1em;
+}
+
+.img-fix {
+  height: 250px;
+  object-fit: scale-down;
+}
+
+.price-fix {
+  position: absolute;
+  bottom: 3em;
+}
+
+.title-fix {
+  position: absolute;
+  bottom: 5em;
 }

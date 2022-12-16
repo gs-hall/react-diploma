@@ -1,4 +1,3 @@
-//import TopSalesItem from "./TopSalesItem";
 import { useGetTopSalesQuery } from "../app/services/shopApi";
 import Loader from "./Loader";
 import Error from "./Error";
