@@ -3,6 +3,7 @@ import CartTableItem from "./CartTableItem";
 import { numberWithSpaces, calcDotProduct } from "../utils/utils";
 import { cartActions } from "../app/services/cart/cartSlice";
 import { CartItems } from "../types/types";
+import { Link } from "react-router-dom";
 
 interface CartTableProps {
   items: CartItems;
@@ -10,7 +11,17 @@ interface CartTableProps {
 
 export default function CartTable({ items }: CartTableProps) {
   const dispatch = useDispatch();
-  if (!items) return null;
+
+  if (items == null || Object.keys(items).length === 0) {
+    return (
+      <>
+        <br/><br/>
+        <h5 className="text-center">Корзина пуста, Вы можете найти подходящие товары в <Link to="/catalog">каталоге</Link></h5>
+        <br/><br/>
+      </>
+    );
+  };
+
 
   return (
     <table className="table table-bordered">

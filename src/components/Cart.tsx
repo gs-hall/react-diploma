@@ -1,6 +1,5 @@
 import React from "react";
 import CartTable from "./CartTable";
-import { Link } from "react-router-dom";
 import useGetCart from "../hooks/useGetCart";
 
 interface CartProps {
@@ -9,19 +8,6 @@ interface CartProps {
 
 export default function Cart({ children }: CartProps) {
   const items = useGetCart();
-
-  console.log('Cart data = ', items);
-
-  if (items == null || Object.keys(items).length === 0) {
-    return (
-      <>
-        <br/><br/>
-        <h5 className="text-center">Корзина пуста, Вы можете найти подходящие товары в <Link to="/catalog">каталоге</Link></h5>
-        <br/><br/>
-        { children }
-      </>
-    );
-  };
 
   return (
     <section className="cart">

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { cartActions, selectOrder, selectOwner } from "../app/services/cart/cartSlice";
+import { cartActions, selectOrder } from "../app/services/cart/cartSlice";
 import { usePostOrderMutation } from "../app/services/shopApi";
 import { Order as OrderType } from "../types/types";
 import Error from "./Error";
@@ -10,10 +10,9 @@ import Loader from "./Loader";
 export default function Order() {
   const dispatch = useDispatch();
   const [agreement, setAgreement] = useState(false);
-  const owner = useSelector(selectOwner);
-  const { phone, address } = owner;
   const [ postOrder, { isLoading, isError, isSuccess } ] = usePostOrderMutation();
   const order: OrderType = useSelector(selectOrder);
+  const { phone, address } = order.owner;
   const navigate = useNavigate();
 
   const cardStyle = {
@@ -23,7 +22,7 @@ export default function Order() {
 
   const handleOrderFormChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
-    dispatch(cartActions.setOwnerData({ ...owner, [name]: value }));
+    dispatch(cartActions.setOwnerData({ ...order.owner, [name]: value }));
   };
 
   const handleSubmitOrder = async (e: React.FormEvent<HTMLFormElement>) => {
