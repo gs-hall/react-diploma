@@ -1,7 +1,8 @@
-import TopSalesItem from "./TopSalesItem";
+//import TopSalesItem from "./TopSalesItem";
 import { useGetTopSalesQuery } from "../app/services/shopApi";
 import Loader from "./Loader";
 import Error from "./Error";
+import CatalogItem from "./CatalogItem";
 
 export default function TopSales() {
   const { data, error, isLoading, refetch } = useGetTopSalesQuery();
@@ -12,7 +13,7 @@ export default function TopSales() {
       { error && <Error message="Ошибка получения хитов продаж" refetch={refetch} isLoading={isLoading} /> }
       { data &&
         <div className="row">
-          {data.map(item => <TopSalesItem item={item} key={item.id} />) }
+          {data.map(item => <CatalogItem item={item} key={item.id} />) }
         </div>
       }
     </section>
