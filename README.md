@@ -1,2 +1,2 @@
-# netology-react-diploma
+# react-diploma
 Online shoe store
